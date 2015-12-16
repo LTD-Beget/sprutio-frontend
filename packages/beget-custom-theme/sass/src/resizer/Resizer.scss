@@ -1,0 +1,59 @@
+.#{$prefix}resizable-handle {
+    background: none;
+}
+
+
+// In neptune, the side handles are 1px width and background position is at centre of the dimension;
+.#{$prefix}resizable-handle-east-over,
+.#{$prefix}resizable-handle-west-over {
+    background: none;
+}
+
+.#{$prefix}resizable-handle-south-over,
+.#{$prefix}resizable-handle-north-over {
+    background: none;
+}
+
+.#{$prefix}resizable-handle-southeast-over {
+    background: none;
+}
+
+.#{$prefix}resizable-handle-northwest-over {
+    background: none;
+}
+
+.#{$prefix}resizable-handle-northeast-over {
+    background: none;
+}
+
+.#{$prefix}resizable-handle-southwest-over {
+    background: none;
+}
+
+.#{$prefix}resizable-pinned {
+    .#{$prefix}resizable-handle-east,
+    .#{$prefix}resizable-handle-west {
+        background: none;
+    }
+
+    .#{$prefix}resizable-handle-south,
+    .#{$prefix}resizable-handle-north {
+        background: none;
+    }
+
+    .#{$prefix}resizable-handle-southeast {
+        background: none;
+    }
+
+    .#{$prefix}resizable-handle-northwest {
+        background: none;
+    }
+
+    .#{$prefix}resizable-handle-northeast {
+        background: none;
+    }
+
+    .#{$prefix}resizable-handle-southwest {
+        background: none;
+    }
+}

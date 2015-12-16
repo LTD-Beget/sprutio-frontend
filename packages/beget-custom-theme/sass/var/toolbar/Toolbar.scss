@@ -1,0 +1,21 @@
+/** @class Ext.toolbar.Toolbar */
+//
+
+$toolbar-background-color: #fff !default;
+$toolbar-border-width: 1px !default;
+$toolbar-border-color: #fff !default;
+$toolbar-horizontal-spacing: 8px !default;
+$toolbar-vertical-spacing: 6px !default;
+$toolbar-footer-vertical-spacing: 6px !default;
+$toolbar-footer-background-color: mix($base-light-color, #fff, 30%) !default;
+
+$toolbar-scroller-width: 16px !default;
+$toolbar-scroller-height: 16px !default;
+$toolbar-scroller-border-width: 0 !default;
+
+//separator
+$toolbar-separator-color: #fff !default;
+$toolbar-separator-horizontal-border-width: 0 0 0 1px !default;
+$toolbar-separator-vertical-border-width: 1px 0 0 !default;
+
+$toolbar-tool-background-image: 'tools/tool-sprites-dark' !default;

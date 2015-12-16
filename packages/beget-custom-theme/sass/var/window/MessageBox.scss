@@ -1,0 +1,17 @@
+/**
+ * @var {list}
+ * The background-position of the MessageBox icon
+ */
+$messagebox-icon-background-position: center center !default;
+
+/**
+ * @var {number}
+ * The size of the MessageBox icon
+ */
+$messagebox-icon-size: 42px !default;
+
+/**
+ * @var {number}
+ * The amount of space between the MessageBox icon and the message text
+ */
+$messagebox-icon-spacing: 10px !default;

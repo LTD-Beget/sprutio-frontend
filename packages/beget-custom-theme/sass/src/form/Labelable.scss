@@ -1,0 +1,10 @@
+.#{$prefix}form-item-label-default {
+
+  &.#{$prefix}form-item-label-top {
+    height: 1px;
+    > .#{$prefix}form-item-label-inner {
+      padding-top: 0;
+      padding-left: 0;
+    }
+  }
+}

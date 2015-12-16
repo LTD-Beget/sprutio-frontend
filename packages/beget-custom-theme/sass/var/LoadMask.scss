@@ -1,0 +1,15 @@
+/**
+ * @class Ext.LoadMask
+ */
+
+/**
+ * @var {number}
+ * Opacity of the LoadMask
+ */
+$loadmask-opacity: 0.5 !default;
+
+/**
+ * @var {color}
+ * The background-color of the LoadMask
+ */
+$loadmask-background-color: #575f72 !default;

@@ -1,0 +1,31 @@
+.#{$prefix}tab.#{$prefix}tab-active {
+  &.#{$prefix}tab-default {
+    padding: 7px 10px;
+    background: #DCE5EC;
+    border: 1px solid transparent;
+
+    &.#{$prefix}tab-over {
+      border: 1px solid transparent;
+    }
+  }
+}
+
+.#{$prefix}tab {
+  &.#{$prefix}tab-default {
+    padding: 7px 10px;
+    background: none;
+    border: 1px solid transparent;
+
+    &.#{$prefix}tab-over {
+      border: 1px solid transparent;
+    }
+  }
+}
+
+.#{$prefix}-tab-inner-default {
+      color: #666;
+}
+
+.x-tab.x-tab-active.x-tab-default .x-tab-inner-default {
+    color: #666;
+}

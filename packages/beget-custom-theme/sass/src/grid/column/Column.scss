@@ -1,0 +1,61 @@
+.#{$prefix}column-header-sort-ASC .#{$prefix}column-header-text {
+  background-image: none;
+  padding: 0;
+}
+
+.#{$prefix}column-header-sort-DESC .#{$prefix}column-header-text {
+  background-image: none;
+  padding: 0;
+}
+
+.#{$prefix}column-header-sort-ASC .#{$prefix}column-header-text:after {
+  content: "\f0d8";
+
+  display: inline-block !important;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: none;
+  padding: 0 10px;
+  width: auto;
+  color: $base-text-color;
+}
+
+.#{$prefix}column-header-sort-DESC .#{$prefix}column-header-text:after {
+  content: "\f0d7";
+
+  display: inline-block !important;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: none;
+  padding: 0 10px;
+  width: auto;
+  color: $base-text-color;
+}
+
+.#{$prefix}column-header-trigger {
+  background-image: none;
+}
+
+.#{$prefix}column-header-trigger:after {
+  content: "\f107";
+
+  display: inline-block !important;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-image: none;
+  padding: 7px 5px;
+  width: auto;
+  color: $base-text-color;
+}

@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url('https://fonts.gstatic.com/s/opensans/v10/uYKcPVoh6c5R0NpdEY5A-Q.woff') format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNShsxEYwM7FgeyaSgU71cLG0.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url('https://fonts.gstatic.com/s/opensans/v10/O4NhV7_qs9r9seTo7fnsVD8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 600;
+  src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'), url('https://fonts.gstatic.com/s/opensans/v10/PRmiXeptR36kaC0GEAetxsUW6j0fiq4_bYOAoMNnBhA.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('/fm/resources/fonts/fontawesome-webfont.eot?v=4.2.0');
+  src: url('/fm/resources/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('/fm/resources/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('/fm/resources/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('/fm/resources/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.#{$prefix}component,
+.#{$prefix}container {
+    // position relative so that things can be positioned inside of components/containers
+    // e.g. touch scroll indicators.
+    color: #666;
+    position: relative;
+}

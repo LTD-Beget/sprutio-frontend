@@ -1,0 +1,45 @@
+.#{$prefix}menu-item-icon-default {
+
+  &.#{$prefix}menu-item-checkbox {
+
+    .#{$prefix}menu-item-checked & {
+      background-image: url('/fm/resources/images/sprites/checkboxes-radio.png');
+      background-position: -11px -16px;
+
+      &:hover {
+        background-image: url('/fm/resources/images/sprites/checkboxes-radio.png');
+        background-position: -135px -16px;
+      }
+    }
+
+    .#{$prefix}menu-item-unchecked & {
+      background-image: url('/fm/resources/images/sprites/checkboxes-radio.png');
+      background-position: -42px -16px;
+
+      &:hover {
+        background-image: url('/fm/resources/images/sprites/checkboxes-radio.png');
+        background-position: -166px -16px;
+      }
+    }
+  }
+}
+
+.#{$prefix}menu-item-arrow-default {
+  background-image: none;
+}
+
+.#{$prefix}menu-item-arrow-default:after {
+
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: $font-size;
+  color: $base-text-color;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  content: "\f0da";
+  background-image: none;
+  padding: 3px;
+  width: auto;
+}

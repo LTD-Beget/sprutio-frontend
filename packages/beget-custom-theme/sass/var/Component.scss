@@ -1,0 +1,19 @@
+// Base variables for theme
+$prefix: 'x-' !default;
+$include-rtl: false !default;
+$color: #575e72 !default;
+
+$font-family: 'Open Sans', sans-serif !default;
+$font-weight: 400 !default;
+$font-weight-bold: 600 !default;
+$base-color: #575f72 !default;
+$base-highlight-color: mix(#fff, $base-color, 15%) !default;
+$base-light-color: mix(#fff, $base-color, 65%) !default;
+$base-dark-color: mix(#000, $base-color, 14%) !default;
+$body-background-color: #fff !default;
+$neutral-color: #EEF3F6 !default;
+$font-size: 12px !default;
+
+$include-default-uis: true !default;
+$base-text-color: #545c6d;
+

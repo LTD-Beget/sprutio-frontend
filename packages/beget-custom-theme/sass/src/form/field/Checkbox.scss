@@ -1,0 +1,44 @@
+.#{$prefix}form-radio-default {
+  background: theme-background-image($form-checkbox-background-image) -44px -53px no-repeat;
+
+  .#{$prefix}form-cb-checked & {
+    background-position: -13px -53px;
+  }
+}
+
+.#{$prefix}form-checkbox-default {
+  background: theme-background-image($form-checkbox-background-image) -44px -19px no-repeat;
+
+  .#{$prefix}form-cb-checked & {
+    background-position: -13px -19px;
+  }
+}
+
+.#{$prefix}field-default-form-checkbox-focus {
+  background-position: -168px -19px;
+
+  .#{$prefix}form-cb-checked & {
+    background-position: -137px -19px;
+  }
+}
+
+.#{$prefix}field-default-form-checkbox-focus.#{$prefix}form-radio-default {
+  background-position: -168px -53px;
+
+  .#{$prefix}form-cb-checked & {
+    background-position: -137px -53px;
+  }
+}
+
+.#{$prefix}form-cb-default {
+  margin: 0;
+}
+
+.#{$prefix}form-cb-label-default {
+  color: #666;
+  margin: 0;
+}
+
+.#{$prefix}form-cb-wrap-default {
+    height: 24px;
+}

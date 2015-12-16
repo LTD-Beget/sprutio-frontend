@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+">
+    <information>
+        <title>Beget File Manager</title>
+        <vendor>LTD BeGet</vendor>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.8+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="/static/app/begetfm.jar" main="true"/>
+    </resources>
+    <applet-desc
+            name="Beget File Manager"
+            main-class="begetfm.begetfm"
+            width="1"
+            height="1" />
+    <update check="background"/>
+</jnlp>

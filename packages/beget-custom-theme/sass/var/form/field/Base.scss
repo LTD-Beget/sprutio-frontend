@@ -1,0 +1,15 @@
+$form-field-height: 32px !default;
+$form-field-disabled-opacity: .7 !default;
+$form-field-padding: 2px 6px !default;
+
+/**
+ * @var {string}
+ * The background-image of the checkbox
+ */
+$form-checkbox-background-image: 'form/checkboxes-radio' !default;
+
+/**
+ * @var {string}
+ * The background-image of the radio button
+ */
+$form-radio-background-image: 'form/checkboxes-radio' !default;

@@ -1,0 +1,112 @@
+.#{$prefix}form-trigger-wrap-default {
+
+  background-color: #FFF;
+  border: 1px solid #bfbfbf;
+  position: relative;
+  border-radius: 0;
+
+  box-shadow: 0 0 0 1px #FFF, 0 0 0 1px #FFF;
+
+  &.#{$prefix}form-trigger-wrap-focus {
+
+  }
+
+  &.#{$prefix}form-trigger-wrap-invalid {
+
+  }
+}
+
+.#{$prefix}form-trigger-default {
+  padding: 15px;
+  top: 2px;
+  right: 0;
+  border: none;
+  background: #505769;
+  -webkit-box-shadow: inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  box-shadow:         inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+
+  &.#{$prefix}form-trigger-over {
+    background: #2B3241;
+  }
+}
+
+.#{$prefix}form-trigger-default:before {
+  color: #FFF;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f078";
+  position: absolute;
+  top: 9px;
+  right: 9px;
+}
+
+.#{$prefix}form-clear-trigger {
+  padding: 15px;
+  top: 2px;
+  right: 0;
+  border: none;
+  background: #505769;
+  -webkit-box-shadow: inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  box-shadow:         inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  border-right: 1px solid #656b78;
+}
+
+.#{$prefix}form-clear-trigger:before {
+  color: #FFF;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f00d";
+  position: absolute;
+  top: 10px;
+  right: 44px;
+}
+
+
+.#{$prefix}form-search-trigger {
+  padding: 15px;
+  top: 2px;
+  right: 0;
+  border: none;
+  background: #505769;
+  -webkit-box-shadow: inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+  box-shadow:         inset 0 1px 6px 0 rgba(50, 50, 50, 0.75);
+}
+
+.#{$prefix}form-search-trigger:hover {
+  background: #262c3a;
+  box-shadow: none;
+}
+
+.#{$prefix}form-clear-trigger:hover {
+  background: #262c3a;
+  box-shadow: none;
+  border-right: 1px solid transparent;
+}
+
+.#{$prefix}form-search-trigger:before {
+  color: #FFF;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f002";
+  position: absolute;
+  top: 9px;
+  right: 9px;
+}

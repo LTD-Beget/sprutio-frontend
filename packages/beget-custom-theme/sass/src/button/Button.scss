@@ -1,0 +1,32 @@
+.#{$prefix}btn-wrap-default-toolbar-small {
+  &.#{$prefix}btn-arrow-right:after {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    content: "\f0dd";
+    background-image: none;
+    padding: 4px;
+    width: auto;
+    color: $base-text-color;
+  }
+
+  &.#{$prefix}btn-arrow-bottom:after {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    content: "\f0dd";
+    background-image: none;
+    padding: 0;
+    width: auto;
+    color: $base-text-color;
+  }
+}
+
