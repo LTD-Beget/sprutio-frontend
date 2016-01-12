@@ -1,2 +1,2 @@
 // @tag full-page
-// @require /home/grey2k/PycharmProjects/FMOpenSource/app/public/fm/app.js
+// @require /home/grey2k/Dropbox/Dev/Beget/sprutio/app/public/fm/app.js
