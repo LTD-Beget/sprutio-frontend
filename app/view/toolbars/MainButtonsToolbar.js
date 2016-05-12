@@ -46,6 +46,18 @@ Ext.define('FM.view.toolbars.MainButtonsToolbar', {
           })(this)
         }, {
           xtype: 'button',
+          name: FM.Actions.RemoteWebDav.getIconCls(),
+          text: FM.Actions.RemoteWebDav.getMenuText(),
+          iconCls: FM.Actions.RemoteWebDav.getIconCls(),
+          scale: 'large',
+          iconAlign: 'top',
+          handler: (function(_this) {
+            return function() {
+              return FM.Actions.RemoteWebDav.execute(FM.Active);
+            };
+          })(this)
+        }, {
+          xtype: 'button',
           name: FM.Actions.Refresh.getIconCls(),
           text: FM.Actions.Refresh.getMenuText(),
           iconCls: FM.Actions.Refresh.getIconCls(),

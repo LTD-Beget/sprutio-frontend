@@ -217,6 +217,7 @@ Ext.define('FM.Application', {
     allowed_no_files = {};
     allowed_any[FM.Actions.HomeFtp.self.getName()] = true;
     allowed_any[FM.Actions.RemoteFtp.self.getName()] = true;
+    allowed_any[FM.Actions.RemoteWebDav.self.getName()] = true;
     allowed_any[FM.Actions.Local.self.getName()] = true;
     allowed_any[FM.Actions.Refresh.self.getName()] = true;
     allowed_no_files[FM.Actions.Upload.self.getName()] = true;
@@ -899,6 +900,7 @@ Ext.define('FM.Application', {
     FM.Session = {};
     FM.Session.HOME = 'home';
     FM.Session.PUBLIC_FTP = 'public_ftp';
+    FM.Session.PUBLIC_WEBDAV = 'public_webdav';
     FM.Session.LOCAL_APPLET = 'local_applet';
     FM.Status = {};
     FM.Status.STATUS_WAIT = 'wait';

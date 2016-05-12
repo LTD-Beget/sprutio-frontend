@@ -43,6 +43,16 @@ Ext.define 'FM.view.toolbars.MainButtonsToolbar',
           },
           {
             xtype: 'button'
+            name: FM.Actions.RemoteWebDav.getIconCls()
+            text: FM.Actions.RemoteWebDav.getMenuText()
+            iconCls: FM.Actions.RemoteWebDav.getIconCls()
+            scale: 'large'
+            iconAlign: 'top'
+            handler: () =>
+              FM.Actions.RemoteWebDav.execute(FM.Active)
+          },
+          {
+            xtype: 'button'
             name: FM.Actions.Refresh.getIconCls()
             text: FM.Actions.Refresh.getMenuText()
             iconCls: FM.Actions.Refresh.getIconCls()

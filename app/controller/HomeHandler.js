@@ -30,6 +30,7 @@ Ext.define('FM.controller.HomeHandler', {
     FM.Logger.log('Event processInit run in HomeHandler! data = ', data, panels);
     FM.Home = {};
     FM.Home.ftp_connections = [];
+    FM.Home.webdav_connections = [];
     if (data.quota != null) {
       FM.Home.quota = data.quota;
       this.processQuota(data.quota, panels);
@@ -42,6 +43,10 @@ Ext.define('FM.controller.HomeHandler', {
       FM.Home.ftp_connections = [];
       this.processConnections(data.ftp_connections);
     }
+    if (data.webdav_connections != null) {
+      FM.Home.webdav_connections = [];
+      this.processConnections(data.webdav_connections);
+    }
     return this.processFastMenu(data, panels);
   },
   processFastMenu: function(data, panels) {
@@ -51,7 +56,7 @@ Ext.define('FM.controller.HomeHandler', {
     for (i = 0, len = panels.length; i < len; i++) {
       panel = panels[i];
       results.push((function(panel) {
-        var connection, fast_menu, fn, ftp_connection_menu, home_menu, j, len1, menu_element, ref;
+        var connection, fast_menu, fn, fn1, ftp_connection_menu, home_menu, j, k, len1, len2, menu_element, ref, ref1, webdav_connection_menu, webdav_menu_element;
         fast_menu = {
           xtype: 'menu',
           items: []
@@ -109,6 +114,48 @@ Ext.define('FM.controller.HomeHandler', {
           }
           fast_menu.items.push(menu_element);
         }
+        if ((data.webdav_connections != null) && data.webdav_connections.length > 0) {
+          webdav_menu_element = {
+            xtype: 'menuitem',
+            text: FM.Actions.RemoteWebDav.getMenuText(),
+            iconCls: FM.Actions.RemoteWebDav.getIconCls(),
+            handler: (function(_this) {
+              return function() {
+                return FM.Actions.RemoteWebDav.execute();
+              };
+            })(this)
+          };
+          webdav_connection_menu = [];
+          if (data.webdav_connections.length <= 100) {
+            ref1 = data.webdav_connections;
+            fn1 = function(connection) {
+              var webdav_connection_menu_element;
+              webdav_connection_menu_element = {
+                xtype: 'menuitem',
+                text: connection.user + "@" + connection.host,
+                iconCls: 'fm-action-connect-webdav',
+                handler: (function(_this) {
+                  return function() {
+                    return FM.Actions.OpenWebDav.execute(panel, {
+                      type: FM.Session.PUBLIC_WEBDAV,
+                      path: '/',
+                      server_id: connection.id
+                    });
+                  };
+                })(this)
+              };
+              return webdav_connection_menu.push(webdav_connection_menu_element);
+            };
+            for (k = 0, len2 = ref1.length; k < len2; k++) {
+              connection = ref1[k];
+              fn1(connection);
+            }
+          }
+          if (webdav_connection_menu.length > 0) {
+            webdav_menu_element.menu = webdav_connection_menu;
+          }
+          fast_menu.items.push(webdav_menu_element);
+        }
         return panel.setFastMenu(fast_menu);
       })(panel));
     }
@@ -132,6 +179,10 @@ Ext.define('FM.controller.HomeHandler', {
   processConnections: function(ftp_connections) {
     FM.Logger.log('processConnections() called arguments =', arguments);
     return FM.Stores.FtpConenctions.loadData(ftp_connections);
+  },
+  processWebDavConnections: function(webdav_connections) {
+    FM.Logger.log('processConnections() called arguments =', arguments);
+    return FM.Stores.WebDavConenctions.loadData(webdav_connections);
   },
   processQuota: function(quota, panels) {
     var all, all_files, file_quota, free, i, len, panel, percent, rounded, rounded_all, rounded_all_files, rounded_files, text, used, used_files, warning;
