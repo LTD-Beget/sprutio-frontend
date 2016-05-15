@@ -45,7 +45,7 @@ Ext.define('FM.controller.HomeHandler', {
     }
     if (data.webdav_connections != null) {
       FM.Home.webdav_connections = [];
-      this.processConnections(data.webdav_connections);
+      this.processWebDavConnections(data.webdav_connections);
     }
     return this.processFastMenu(data, panels);
   },

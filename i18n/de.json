@@ -161,6 +161,7 @@
   "Highlight selected word": "Wörter markieren",
   "Home FTP": "Home-FTP",
   "Host": "FTP-Server",
+  "WDHost": "WebDav-Server",
   "IP": "IP",
   "IP block": "IP-Sperre",
   "Incorrect archive directory": "Ungültiges Archivverzeichnis",

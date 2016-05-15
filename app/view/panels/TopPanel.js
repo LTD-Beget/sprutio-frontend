@@ -18,9 +18,10 @@ Ext.define('FM.view.panels.TopPanel', {
     return this.callParent(arguments);
   },
   updateButtonsState: function(panel, files) {
-    var analyze_size_button, create_archive_button, download_archive_button, home_button, mkdir_button, refresh_button, remote_button, search_files_button, search_text_button, upload_button;
+    var analyze_size_button, create_archive_button, download_archive_button, home_button, mkdir_button, refresh_button, remote_button, remote_webdav_button, search_files_button, search_text_button, upload_button;
     home_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.HomeFtp.getIconCls() + "]", this.items.get(0))[0];
     remote_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.RemoteFtp.getIconCls() + "]", this.items.get(0))[0];
+    remote_webdav_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.RemoteWebDav.getIconCls() + "]", this.items.get(0))[0];
     refresh_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.Refresh.getIconCls() + "]", this.items.get(0))[0];
     mkdir_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.NewFolder.getIconCls() + "]", this.items.get(0))[0];
     upload_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.Upload.getIconCls() + "]", this.items.get(0))[0];
@@ -38,6 +39,11 @@ Ext.define('FM.view.panels.TopPanel', {
       remote_button.setDisabled(false);
     } else {
       remote_button.setDisabled(true);
+    }
+    if (FM.helpers.isAllowed(FM.Actions.RemoteWebDav, panel, files)) {
+      remote_webdav_button.setDisabled(false);
+    } else {
+      remote_webdav_button.setDisabled(true);
     }
     if (FM.helpers.isAllowed(FM.Actions.Refresh, panel, files)) {
       refresh_button.setDisabled(false);
@@ -81,10 +87,11 @@ Ext.define('FM.view.panels.TopPanel', {
     }
   },
   updateMenuState: function(panel, files) {
-    var analyze_size_button, chmod_button, copy_button, create_archive_button, create_copy_button, download_basic_button, download_button, download_bzip_button, download_gzip_button, download_tar_button, download_zip_button, edit_button, home_button, ipblock_button, mkdir_button, move_button, new_button, new_file_button, operations_button, refresh_button, remote_button, remove_button, rename_button, search_files_button, search_menu, search_text_button, toolbar, upload_button, view_button;
+    var analyze_size_button, chmod_button, copy_button, create_archive_button, create_copy_button, download_basic_button, download_button, download_bzip_button, download_gzip_button, download_tar_button, download_zip_button, edit_button, home_button, ipblock_button, mkdir_button, move_button, new_button, new_file_button, operations_button, refresh_button, remote_button, remote_webdav_button, remove_button, rename_button, search_files_button, search_menu, search_text_button, toolbar, upload_button, view_button;
     toolbar = Ext.ComponentQuery.query('main-top-toolbar', this)[0];
     home_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.HomeFtp.getIconCls() + "]", toolbar)[0];
     remote_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.RemoteFtp.getIconCls() + "]", toolbar)[0];
+    remote_webdav_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.RemoteWebDav.getIconCls() + "]", toolbar)[0];
     refresh_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.Refresh.getIconCls() + "]", toolbar)[0];
     mkdir_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.NewFolder.getIconCls() + "]", toolbar)[0];
     new_file_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.NewFile.getIconCls() + "]", toolbar)[0];
@@ -120,6 +127,11 @@ Ext.define('FM.view.panels.TopPanel', {
       remote_button.setDisabled(false);
     } else {
       remote_button.setDisabled(true);
+    }
+    if (FM.helpers.isAllowed(FM.Actions.RemoteWebDav, panel, files)) {
+      remote_webdav_button.setDisabled(false);
+    } else {
+      remote_webdav_button.setDisabled(true);
     }
     if (FM.helpers.isAllowed(FM.Actions.Refresh, panel, files)) {
       refresh_button.setDisabled(false);

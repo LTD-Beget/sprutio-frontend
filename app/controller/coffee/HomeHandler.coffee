@@ -43,7 +43,7 @@ Ext.define 'FM.controller.HomeHandler',
 
     if data.webdav_connections?
       FM.Home.webdav_connections = []
-      @processConnections(data.webdav_connections)
+      @processWebDavConnections(data.webdav_connections)
 
     @processFastMenu(data, panels)
 

@@ -161,6 +161,7 @@
   "Highlight selected word": "Подсветка слова",
   "Home FTP": "Домашний FTP",
   "Host": "FTP сервер",
+  "WDHost": "WebDav сервер",
   "IP": "IP",
   "IP block": "Настройка доступа по IP",
   "Incorrect archive directory": "Неверная директория архива",

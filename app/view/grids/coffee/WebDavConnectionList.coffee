@@ -64,7 +64,7 @@ Ext.define 'FM.view.grids.WebDavConnectionList',
     @setConfig
       columns: [
         {
-          header: t("Host")
+          header: t("WDHost")
           dataIndex: "host"
           flex: true
           editor:

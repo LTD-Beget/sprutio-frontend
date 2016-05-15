@@ -109,7 +109,7 @@ Ext.define 'FM.controller.Index',
 
     FM.Actions.HomeFtp = Ext.create "FM.action.HomeFtp"
     FM.Actions.RemoteFtp = Ext.create "FM.action.RemoteFtp"
-    FM.Actions.RemoteWebDav = Ext.create "FM.action.RemoteFtp"
+    FM.Actions.RemoteWebDav = Ext.create "FM.action.RemoteWebDav"
     FM.Actions.Local = Ext.create "FM.action.Local"
 
     FM.Actions.Refresh = Ext.create "FM.action.Refresh"
