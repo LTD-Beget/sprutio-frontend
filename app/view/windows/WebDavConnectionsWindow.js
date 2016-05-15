@@ -9,7 +9,7 @@ Ext.define('FM.view.windows.WebDavConnectionsWindow', {
   constrain: true,
   layout: 'fit',
   bodyPadding: '0 0 20 0',
-  width: 450,
+  width: 550,
   height: 300,
   resizable: {
     handles: 's n e w se',

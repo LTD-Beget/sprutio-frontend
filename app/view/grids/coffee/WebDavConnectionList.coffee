@@ -72,9 +72,18 @@ Ext.define 'FM.view.grids.WebDavConnectionList',
             vtype: "host"
             maxLength: 255
           field:
-            xtype: 'textfield'
-            allowBlank: false
-            blankText: 'webdav.domain.ru'
+            xtype: 'combobox'
+            store: new Ext.data.SimpleStore({
+              data:[
+                ['https://webdav.yandex.ru', 'Yandex Disk'],
+                ['', 'Custom Drive'],
+              ],
+              id: 0,
+              fields: ['hostaddress', 'text']
+            }),
+            valueField: 'hostaddress',
+            displayField: 'text',
+            editable: true,
         },
         {
           header: t("User")
