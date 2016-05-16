@@ -291,7 +291,7 @@ body {
   background-image: url('/fm/resources/images/actions/16/remote.png');
 }
 .fm-action-remote-webdav {
-  background-image: url('/fm/resources/images/actions/16/remote.png');
+  background-image: url('/fm/resources/images/actions/16/webdav.png');
 }
 .fm-action-local {
   background-image: url('/fm/resources/images/actions/16/local.png');
@@ -1226,7 +1226,7 @@ div.share_box p {
   background-image: url('/fm/resources/images/actions/32/remote.png');
 }
 #fm-main-buttons-toolbar .fm-action-remote-webdav {
-  background-image: url('/fm/resources/images/actions/32/remote.png');
+  background-image: url('/fm/resources/images/actions/32/webdav.png');
 }
 #fm-main-buttons-toolbar .fm-action-local {
   background-image: url('/fm/resources/images/actions/32/local.png');
