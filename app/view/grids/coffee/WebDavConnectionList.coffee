@@ -76,7 +76,9 @@ Ext.define 'FM.view.grids.WebDavConnectionList',
             store: new Ext.data.SimpleStore({
               data:[
                 ['https://webdav.yandex.ru', 'Yandex Disk'],
-                ['', 'Custom Drive'],
+                ['https://dav.dropdav.com', 'DropBox'],
+                ['https://dav-pocket.appspot.com', 'Google Drive'],
+                ['', 'Custom'],
               ],
               id: 0,
               fields: ['hostaddress', 'text']
