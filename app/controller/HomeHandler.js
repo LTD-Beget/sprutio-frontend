@@ -29,7 +29,7 @@ Ext.define('FM.controller.HomeHandler', {
   processInit: function(data, panels) {
     FM.Logger.log('Event processInit run in HomeHandler! data = ', data, panels);
     FM.Home = {};
-    FM.Home.ftp_connections = [];
+    FM.Home.connections = [];
     if (data.quota != null) {
       FM.Home.quota = data.quota;
       this.processQuota(data.quota, panels);
@@ -38,9 +38,9 @@ Ext.define('FM.controller.HomeHandler', {
       FM.Home.account = data.account;
       this.processAccount(data.account, panels);
     }
-    if (data.ftp_connections != null) {
-      FM.Home.ftp_connections = [];
-      this.processConnections(data.ftp_connections);
+    if (data.connections != null) {
+      FM.Home.connections = [];
+      this.processConnections(data.connections);
     }
     return this.processFastMenu(data, panels);
   },
@@ -51,7 +51,7 @@ Ext.define('FM.controller.HomeHandler', {
     for (i = 0, len = panels.length; i < len; i++) {
       panel = panels[i];
       results.push((function(panel) {
-        var connection, fast_menu, fn, ftp_connection_menu, home_menu, j, len1, menu_element, ref;
+        var connection, connection_menu, fast_menu, home_menu, j, len1, menu_element, ref;
         fast_menu = {
           xtype: 'menu',
           items: []
@@ -67,45 +67,66 @@ Ext.define('FM.controller.HomeHandler', {
           })(this)
         };
         fast_menu.items.push(home_menu);
-        if ((data.ftp_connections != null) && data.ftp_connections.length > 0) {
+        if ((data.connections != null) && data.connections.length > 0) {
           menu_element = {
             xtype: 'menuitem',
-            text: FM.Actions.RemoteFtp.getMenuText(),
-            iconCls: FM.Actions.RemoteFtp.getIconCls(),
+            text: FM.Actions.RemoteConnections.getMenuText(),
+            iconCls: FM.Actions.RemoteConnections.getIconCls(),
             handler: (function(_this) {
               return function() {
-                return FM.Actions.RemoteFtp.execute();
+                return FM.Actions.RemoteConnections.execute();
               };
             })(this)
           };
-          ftp_connection_menu = [];
-          if (data.ftp_connections.length <= 100) {
-            ref = data.ftp_connections;
-            fn = function(connection) {
-              var connection_menu_element;
-              connection_menu_element = {
-                xtype: 'menuitem',
-                text: connection.user + "@" + connection.host,
-                iconCls: 'fm-action-connect-ftp',
-                handler: (function(_this) {
-                  return function() {
-                    return FM.Actions.OpenFtp.execute(panel, {
-                      type: FM.Session.PUBLIC_FTP,
-                      path: '/',
-                      server_id: connection.id
-                    });
-                  };
-                })(this)
-              };
-              return ftp_connection_menu.push(connection_menu_element);
-            };
+          connection_menu = [];
+          if (data.connections.length <= 100) {
+            ref = data.connections;
             for (j = 0, len1 = ref.length; j < len1; j++) {
               connection = ref[j];
-              fn(connection);
+              if (connection.type === 'sftp') {
+                (function(connection) {
+                  var connection_menu_element;
+                  connection_menu_element = {
+                    xtype: 'menuitem',
+                    text: connection.user + "@" + connection.host,
+                    iconCls: 'fm-action-connect-ftp',
+                    handler: (function(_this) {
+                      return function() {
+                        return FM.Actions.OpenSftp.execute(panel, {
+                          type: FM.Session.SFTP,
+                          path: '.',
+                          server_id: connection.id
+                        });
+                      };
+                    })(this)
+                  };
+                  return connection_menu.push(connection_menu_element);
+                })(connection);
+              }
+              if (connection.type === 'ftp') {
+                (function(connection) {
+                  var connection_menu_element;
+                  connection_menu_element = {
+                    xtype: 'menuitem',
+                    text: connection.user + "@" + connection.host,
+                    iconCls: 'fm-action-connect-ftp',
+                    handler: (function(_this) {
+                      return function() {
+                        return FM.Actions.OpenRemoteConnection.execute(panel, {
+                          type: FM.Session.PUBLIC_FTP,
+                          path: '/',
+                          server_id: connection.id
+                        });
+                      };
+                    })(this)
+                  };
+                  return connection_menu.push(connection_menu_element);
+                })(connection);
+              }
             }
           }
-          if (ftp_connection_menu.length > 0) {
-            menu_element.menu = ftp_connection_menu;
+          if (connection_menu.length > 0) {
+            menu_element.menu = connection_menu;
           }
           fast_menu.items.push(menu_element);
         }
@@ -129,9 +150,9 @@ Ext.define('FM.controller.HomeHandler', {
     }
     return results;
   },
-  processConnections: function(ftp_connections) {
+  processConnections: function(connections) {
     FM.Logger.log('processConnections() called arguments =', arguments);
-    return FM.Stores.FtpConenctions.loadData(ftp_connections);
+    return FM.Stores.Conenctions.loadData(connections);
   },
   processQuota: function(quota, panels) {
     var all, all_files, file_quota, free, i, len, panel, percent, rounded, rounded_all, rounded_all_files, rounded_files, text, used, used_files, warning;

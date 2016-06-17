@@ -25,44 +25,89 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
 
         for connection in modified
           if connection.get('id') > 0
-            FM.backend.ajaxSend '/actions/ftp/update',
-              params:
+            if connection.get('type') == 'sftp'
+              FM.backend.ajaxSend '/actions/sftp/update',
                 params:
-                  id: connection.get('id')
-                  host: connection.get('host')
-                  user: connection.get('user')
-                  password: connection.get('decryptedPassword')
-              success: (response) =>
-                response_data = Ext.util.JSON.decode(response.responseText).data
-                FM.Logger.debug(response_data)
+                  params:
+                    id: connection.get('id')
+                    host: connection.get('host')
+                    port: connection.get('port')
+                    user: connection.get('user')
+                    password: connection.get('decryptedPassword')
+                success: (response) =>
+                  response_data = Ext.util.JSON.decode(response.responseText).data
+                  FM.Logger.debug(response_data)
 
-                for key of response_data
-                  connection.set(key, response_data[key])
-                connection.commit()
+                  for key of response_data
+                    connection.set(key, response_data[key])
+                  connection.commit()
 
-              failure: (response) =>
-                FM.Logger.debug(response)
-                FM.helpers.ShowError(t("Error during ftp server update.<br/> Please contact Support."))
-                FM.Logger.error(response)
+                failure: (response) =>
+                  FM.Logger.debug(response)
+                  FM.helpers.ShowError(t("Error during sftp connection update.<br/> Please contact Support."))
+                  FM.Logger.error(response)
+            if connection.get('type') == 'ftp'
+              FM.backend.ajaxSend '/actions/ftp/update',
+                params:
+                  params:
+                    id: connection.get('id')
+                    host: connection.get('host')
+                    port: connection.get('port')
+                    user: connection.get('user')
+                    password: connection.get('decryptedPassword')
+                success: (response) =>
+                  response_data = Ext.util.JSON.decode(response.responseText).data
+                  FM.Logger.debug(response_data)
+
+                  for key of response_data
+                    connection.set(key, response_data[key])
+                  connection.commit()
+
+                failure: (response) =>
+                  FM.Logger.debug(response)
+                  FM.helpers.ShowError(t("Error during ftp connection update.<br/> Please contact Support."))
+                  FM.Logger.error(response)
           else
-            FM.backend.ajaxSend '/actions/ftp/create',
-              params:
+            if connection.get('type') == 'sftp'
+              FM.backend.ajaxSend '/actions/sftp/create',
                 params:
-                  host: connection.get('host')
-                  user: connection.get('user')
-                  password: connection.get('decryptedPassword')
-              success: (response) =>
-                response_data = Ext.util.JSON.decode(response.responseText).data
-                FM.Logger.debug(response_data)
+                  params:
+                    host: connection.get('host')
+                    port: connection.get('port')
+                    user: connection.get('user')
+                    password: connection.get('decryptedPassword')
+                success: (response) =>
+                  response_data = Ext.util.JSON.decode(response.responseText).data
+                  FM.Logger.debug(response_data)
 
-                for key of response_data
-                  connection.set(key, response_data[key])
-                connection.commit()
+                  for key of response_data
+                    connection.set(key, response_data[key])
+                  connection.commit()
 
-              failure: (response) =>
-                FM.Logger.debug(response)
-                FM.helpers.ShowError(t("Error during ftp connection creation.<br/> Please contact Support."))
-                FM.Logger.error(response)
+                failure: (response) =>
+                  FM.Logger.debug(response)
+                  FM.helpers.ShowError(t("Error during sftp connection creation.<br/> Please contact Support."))
+                  FM.Logger.error(response)
+            if connection.get('type') == 'ftp'
+              FM.backend.ajaxSend '/actions/ftp/create',
+                params:
+                  params:
+                    host: connection.get('host')
+                    port: connection.get('port')
+                    user: connection.get('user')
+                    password: connection.get('decryptedPassword')
+                success: (response) =>
+                  response_data = Ext.util.JSON.decode(response.responseText).data
+                  FM.Logger.debug(response_data)
+
+                  for key of response_data
+                    connection.set(key, response_data[key])
+                  connection.commit()
+
+                failure: (response) =>
+                  FM.Logger.debug(response)
+                  FM.helpers.ShowError(t("Error during ftp connection creation.<br/> Please contact Support."))
+                  FM.Logger.error(response)
 
     @items.push
       text: t("Edit")
@@ -90,7 +135,7 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
         plugin.startEdit(connection, 0);
 
     @items.push
-      text: t("New FTP")
+      text: t("New connection")
       cls: "fm-connection-add"
       iconCls: "fm-icon-add"
       handler: () =>
@@ -104,12 +149,14 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
         plugin.editor.floatingButtons.items.get(1).setText(t("Cancel"))
 
         plugin.startAdd
-          host: "ftp.domain.com"
+          host: "domain.com"
+          port: "21"
           user: "user"
           decryptedPassword: "password"
+          type: "ftp"
 
     @items.push
-      text: t("Remove FTP")
+      text: t("Remove connection")
       cls: "fm-connection-remove"
       iconCls: "fm-icon-remove"
       disabled: true
@@ -117,7 +164,7 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
         FM.Logger.debug("ConnectionListTopToolbar remove() handler called", arguments)
 
         question = Ext.create 'FM.view.windows.QuestionWindow',
-          title: t("Delete Ftp Connection")
+          title: t("Delete Connection")
           msg: t("Do you really want to remove this conneciton?")
           modal: true
           yes: () =>
@@ -133,14 +180,24 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
             connection = row[0]
             grid.getStore().remove(connection)
 
-            FM.backend.ajaxSend '/actions/ftp/remove',
-              params:
+            if connection.get('type') == 'sftp'
+              FM.backend.ajaxSend '/actions/sftp/remove',
                 params:
-                  id: connection.get('id')
-              failure: (response) =>
-                FM.Logger.debug(response)
-                FM.helpers.ShowError(t("Error during ftp connection removal.<br/> Please contact Support."))
-                FM.Logger.error(response)
+                  params:
+                    id: connection.get('id')
+                failure: (response) =>
+                  FM.Logger.debug(response)
+                  FM.helpers.ShowError(t("Error during sftp connection removal.<br/> Please contact Support."))
+                  FM.Logger.error(response)
+            if connection.get('type') == 'ftp'
+              FM.backend.ajaxSend '/actions/ftp/remove',
+                params:
+                  params:
+                    id: connection.get('id')
+                failure: (response) =>
+                  FM.Logger.debug(response)
+                  FM.helpers.ShowError(t("Error during ftp connection removal.<br/> Please contact Support."))
+                  FM.Logger.error(response)
 
         question.show()
 

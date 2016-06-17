@@ -204,8 +204,13 @@ Ext.define 'FM.controller.MainHandler',
 
       if panel.session.type == FM.Session.PUBLIC_FTP
         button.setConfig
-          text: FM.Actions.RemoteFtp.getMenuText()
-          iconCls: FM.Actions.RemoteFtp.getIconCls()
+          text: FM.Actions.RemoteConnections.getMenuText()
+          iconCls: FM.Actions.RemoteConnections.getIconCls()
+
+      if panel.session.type == FM.Session.SFTP
+        button.setConfig
+          text: FM.Actions.RemoteConnections.getMenuText()
+          iconCls: FM.Actions.RemoteConnections.getIconCls()
 
       if panel.session.type == FM.Session.LOCAL_APPLET
         button.setConfig

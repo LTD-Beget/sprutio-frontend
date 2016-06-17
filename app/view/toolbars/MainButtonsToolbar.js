@@ -34,14 +34,14 @@ Ext.define('FM.view.toolbars.MainButtonsToolbar', {
           })(this)
         }, {
           xtype: 'button',
-          name: FM.Actions.RemoteFtp.getIconCls(),
-          text: FM.Actions.RemoteFtp.getMenuText(),
-          iconCls: FM.Actions.RemoteFtp.getIconCls(),
+          name: FM.Actions.RemoteConnections.getIconCls(),
+          text: FM.Actions.RemoteConnections.getMenuText(),
+          iconCls: FM.Actions.RemoteConnections.getIconCls(),
           scale: 'large',
           iconAlign: 'top',
           handler: (function(_this) {
             return function() {
-              return FM.Actions.RemoteFtp.execute(FM.Active);
+              return FM.Actions.RemoteConnections.execute(FM.Active);
             };
           })(this)
         }, {
