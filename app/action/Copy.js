@@ -50,7 +50,7 @@ Ext.define('FM.action.Copy', {
           return function() {
             return FM.backend.ajaxSend('/actions/main/check_status', {
               params: {
-                session: session.type === FM.Session.PUBLIC_FTP && target_session.type === FM.Session.HOME ? target_session : session,
+                session: (session.type === FM.Session.PUBLIC_FTP || session.type === FM.Session.SFTP) && target_session.type === FM.Session.HOME ? target_session : session,
                 status: status
               },
               success: function(response) {

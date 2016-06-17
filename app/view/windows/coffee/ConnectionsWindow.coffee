@@ -1,16 +1,16 @@
-Ext.define 'FM.view.windows.FtpConnectionsWindow',
+Ext.define 'FM.view.windows.ConnectionsWindow',
   extend: 'Ext.ux.window.Window'
   requires: [
     'FM.view.grids.ConnectionList'
   ]
-  alias: 'widget.ftp-connections-window'
-  title: t("External FTP")
-  cls: 'fm-ftp-connections-window'
+  alias: 'widget.connections-window'
+  title: t("Remote server")
+  cls: 'fm-connections-window'
   animate: true
   constrain: true
   layout: 'fit'
   bodyPadding: '0 0 20 0'
-  width: 450
+  width: 550
   height: 300
   resizable:
     handles: 's n e w se'
@@ -26,5 +26,5 @@ Ext.define 'FM.view.windows.FtpConnectionsWindow',
     }
   ]
   initComponent: () ->
-    FM.Logger.debug('FM.view.windows.FtpConnectionsWindow initComponent() called', arguments)
+    FM.Logger.debug('FM.view.windows.ConnectionsWindow initComponent() called', arguments)
     @callParent(arguments)

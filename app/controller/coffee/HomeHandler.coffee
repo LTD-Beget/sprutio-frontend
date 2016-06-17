@@ -26,7 +26,7 @@ Ext.define 'FM.controller.HomeHandler',
     FM.Logger.log('Event processInit run in HomeHandler! data = ', data, panels)
 
     FM.Home = {}
-    FM.Home.ftp_connections = []
+    FM.Home.connections = []
 
     if data.quota?
       FM.Home.quota = data.quota
@@ -36,9 +36,9 @@ Ext.define 'FM.controller.HomeHandler',
       FM.Home.account = data.account
       @processAccount(data.account, panels)
 
-    if data.ftp_connections?
-      FM.Home.ftp_connections = []
-      @processConnections(data.ftp_connections)
+    if data.connections?
+      FM.Home.connections = []
+      @processConnections(data.connections)
 
     @processFastMenu(data, panels)
 
@@ -63,36 +63,52 @@ Ext.define 'FM.controller.HomeHandler',
         fast_menu.items.push(home_menu)
 
         # Ftp menu
-        if data.ftp_connections? && data.ftp_connections.length > 0
+        if data.connections? && data.connections.length > 0
           menu_element = {
             xtype: 'menuitem',
-            text: FM.Actions.RemoteFtp.getMenuText()
-            iconCls: FM.Actions.RemoteFtp.getIconCls()
+            text: FM.Actions.RemoteConnections.getMenuText()
+            iconCls: FM.Actions.RemoteConnections.getIconCls()
             handler: () =>
-              FM.Actions.RemoteFtp.execute()
+              FM.Actions.RemoteConnections.execute()
           }
 
-          ftp_connection_menu = []
+          connection_menu = []
 
           # тормозят контекстные меню если они большие, поэтому в целях оптимизации их нет если оч много объектов
-          if data.ftp_connections.length <= 100
-            for connection in data.ftp_connections
-              do(connection) ->
-                connection_menu_element = {
-                  xtype: 'menuitem'
-                  text: connection.user + "@" + connection.host
-                  iconCls: 'fm-action-connect-ftp'
-                  handler: () =>
-                    FM.Actions.OpenFtp.execute panel,
-                      type: FM.Session.PUBLIC_FTP
-                      path: '/'
-                      server_id: connection.id
-                }
+          if data.connections.length <= 100
+            for connection in data.connections
+              if connection.type == 'sftp'
+                do(connection) ->
+                  connection_menu_element = {
+                    xtype: 'menuitem'
+                    text: connection.user + "@" + connection.host
+                    iconCls: 'fm-action-connect-ftp'
+                    handler: () =>
+                      FM.Actions.OpenSftp.execute panel,
+                        type: FM.Session.SFTP
+                        path: '.'
+                        server_id: connection.id
+                  }
 
-                ftp_connection_menu.push(connection_menu_element)
+                  connection_menu.push(connection_menu_element)
 
-          if ftp_connection_menu.length > 0
-            menu_element.menu = ftp_connection_menu
+              if connection.type == 'ftp'
+                do(connection) ->
+                  connection_menu_element = {
+                    xtype: 'menuitem'
+                    text: connection.user + "@" + connection.host
+                    iconCls: 'fm-action-connect-ftp'
+                    handler: () =>
+                      FM.Actions.OpenRemoteConnection.execute panel,
+                        type: FM.Session.PUBLIC_FTP
+                        path: '/'
+                        server_id: connection.id
+                  }
+
+                  connection_menu.push(connection_menu_element)
+
+          if connection_menu.length > 0
+            menu_element.menu = connection_menu
           fast_menu.items.push(menu_element)
 
         panel.setFastMenu(fast_menu)
@@ -105,10 +121,10 @@ Ext.define 'FM.controller.HomeHandler',
       if panel.session.type == FM.Session.HOME
         panel.setServerName(login + '@' + server_name)
 
-  processConnections: (ftp_connections) ->
+  processConnections: (connections) ->
     FM.Logger.log('processConnections() called arguments =', arguments)
 
-    FM.Stores.FtpConenctions.loadData(ftp_connections)
+    FM.Stores.Conenctions.loadData(connections)
 
   processQuota: (quota, panels) ->
     FM.Logger.log('processQuota() called arguments =', arguments)

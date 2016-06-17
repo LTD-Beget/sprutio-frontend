@@ -17,7 +17,7 @@ Ext.define 'FM.view.toolbars.FileListTopToolbar',
 
     @items.push
       xtype: 'button'
-      text: t("Home FTP")
+      text: t("Home server")
       iconCls: "fm-action-home"
       cls: 'fm-source-button'
       margin: '0 10 0 0'
@@ -37,10 +37,10 @@ Ext.define 'FM.view.toolbars.FileListTopToolbar',
               FM.Actions.Local.execute(FM.Active)
           },
           {
-            text: FM.Actions.RemoteFtp.getMenuText()
-            iconCls: FM.Actions.RemoteFtp.getIconCls()
+            text: FM.Actions.RemoteConnections.getMenuText()
+            iconCls: FM.Actions.RemoteConnections.getIconCls()
             handler: () ->
-              FM.Actions.RemoteFtp.execute(FM.Active)
+              FM.Actions.RemoteConnections.execute(FM.Active)
           }
         ]
 

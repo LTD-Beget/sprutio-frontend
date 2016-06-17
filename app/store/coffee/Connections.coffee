@@ -1,8 +1,8 @@
-Ext.define 'FM.store.FtpConnections',
+Ext.define 'FM.store.Connections',
   extend: 'Ext.data.Store'
-  storeId: 'FtpConnections'
+  storeId: 'Connections'
   sortOnLoad: true
-  model: 'FM.model.FtpConnection'
+  model: 'FM.model.Connection'
   sorters: [
     property: "id"
     direction: "ASC"

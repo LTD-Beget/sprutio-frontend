@@ -38,6 +38,9 @@ Ext.define 'FM.view.grids.FileList',
       @initHomeConfig()
       @initHomeStore()
       panel.setShareStatus(listing.is_share, listing.is_share_write)
+    else if session? and session.type? and session.type == FM.Session.SFTP
+      @initHomeConfig()
+      @initHomeStore()
     else if session? and session.type? and session.type == FM.Session.PUBLIC_FTP
       @initPublicFtpConfig()
       @initPublicFtpStore()

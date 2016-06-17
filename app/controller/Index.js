@@ -2,7 +2,7 @@
 Ext.define('FM.controller.Index', {
   extend: 'Ext.app.Controller',
   views: ['panels.TopPanel', 'panels.CenterPanel', 'panels.BottomPanel', 'grids.FileList'],
-  requires: ['FM.action.HomeFtp', 'FM.action.RemoteFtp', 'FM.action.Local', 'FM.action.Refresh', 'FM.action.Upload', 'FM.action.CreateArchive', 'FM.action.ExtractArchive', 'FM.action.DownloadArchive', 'FM.action.SearchFiles', 'FM.action.SearchText', 'FM.action.AnalyzeSize', 'FM.action.DownloadBasic', 'FM.action.DownloadZip', 'FM.action.DownloadGZip', 'FM.action.DownloadBZ2', 'FM.action.DownloadTar', 'FM.action.Open', 'FM.action.OpenFile', 'FM.action.OpenSite', 'FM.action.OpenFtp', 'FM.action.Navigate', 'FM.action.CopyEntry', 'FM.action.CopyPath', 'FM.action.Up', 'FM.action.Root', 'FM.action.View', 'FM.action.ViewImage', 'FM.action.Edit', 'FM.action.Chmod', 'FM.action.Copy', 'FM.action.CreateCopy', 'FM.action.Move', 'FM.action.Rename', 'FM.action.NewFolder', 'FM.action.NewFile', 'FM.action.Remove', 'FM.action.IPBlock', 'FM.action.Settings', 'FM.action.Help', 'FM.action.Logout', 'FM.store.FtpConnections', 'FM.store.Sites', 'Ext.layout.container.Anchor', 'Ext.ux.window.Window', 'Ext.ux.grid.plugin.RowEditing'],
+  requires: ['FM.action.HomeFtp', 'FM.action.RemoteConnections', 'FM.action.Local', 'FM.action.Refresh', 'FM.action.Upload', 'FM.action.CreateArchive', 'FM.action.ExtractArchive', 'FM.action.DownloadArchive', 'FM.action.SearchFiles', 'FM.action.SearchText', 'FM.action.AnalyzeSize', 'FM.action.DownloadBasic', 'FM.action.DownloadZip', 'FM.action.DownloadGZip', 'FM.action.DownloadBZ2', 'FM.action.DownloadTar', 'FM.action.Open', 'FM.action.OpenFile', 'FM.action.OpenSite', 'FM.action.OpenRemoteConnection', 'FM.action.Navigate', 'FM.action.CopyEntry', 'FM.action.CopyPath', 'FM.action.Up', 'FM.action.Root', 'FM.action.View', 'FM.action.ViewImage', 'FM.action.Edit', 'FM.action.Chmod', 'FM.action.Copy', 'FM.action.CreateCopy', 'FM.action.Move', 'FM.action.Rename', 'FM.action.NewFolder', 'FM.action.NewFile', 'FM.action.Remove', 'FM.action.IPBlock', 'FM.action.Settings', 'FM.action.Help', 'FM.action.Logout', 'FM.store.Connections', 'FM.store.Sites', 'Ext.layout.container.Anchor', 'Ext.ux.window.Window', 'Ext.ux.grid.plugin.RowEditing'],
   init: function() {
     FM.Logger.log('Index init');
     this.initActions();
@@ -36,7 +36,7 @@ Ext.define('FM.controller.Index', {
   initActions: function() {
     FM.Actions = {};
     FM.Actions.HomeFtp = Ext.create("FM.action.HomeFtp");
-    FM.Actions.RemoteFtp = Ext.create("FM.action.RemoteFtp");
+    FM.Actions.RemoteConnections = Ext.create("FM.action.RemoteConnections");
     FM.Actions.Local = Ext.create("FM.action.Local");
     FM.Actions.Refresh = Ext.create("FM.action.Refresh");
     FM.Actions.Upload = Ext.create("FM.action.Upload");
@@ -54,7 +54,7 @@ Ext.define('FM.controller.Index', {
     FM.Actions.Open = Ext.create("FM.action.Open");
     FM.Actions.OpenFile = Ext.create("FM.action.OpenFile");
     FM.Actions.OpenSite = Ext.create("FM.action.OpenSite");
-    FM.Actions.OpenFtp = Ext.create("FM.action.OpenFtp");
+    FM.Actions.OpenRemoteConnection = Ext.create("FM.action.OpenRemoteConnection");
     FM.Actions.Navigate = Ext.create("FM.action.Navigate");
     FM.Actions.CopyEntry = Ext.create("FM.action.CopyEntry");
     FM.Actions.CopyPath = Ext.create("FM.action.CopyPath");
@@ -78,7 +78,7 @@ Ext.define('FM.controller.Index', {
   },
   initStores: function() {
     FM.Stores = {};
-    FM.Stores.FtpConenctions = Ext.create("FM.store.FtpConnections");
+    FM.Stores.Conenctions = Ext.create("FM.store.Connections");
     return FM.Stores.Sites = Ext.create("FM.store.Sites");
   },
   initEvents: function() {
