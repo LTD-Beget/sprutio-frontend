@@ -216,7 +216,7 @@ Ext.define('FM.Application', {
     allowed_any = {};
     allowed_no_files = {};
     allowed_any[FM.Actions.HomeFtp.self.getName()] = true;
-    allowed_any[FM.Actions.RemoteFtp.self.getName()] = true;
+    allowed_any[FM.Actions.RemoteConnections.self.getName()] = true;
     allowed_any[FM.Actions.RemoteWebDav.self.getName()] = true;
     allowed_any[FM.Actions.Local.self.getName()] = true;
     allowed_any[FM.Actions.Refresh.self.getName()] = true;
@@ -282,7 +282,7 @@ Ext.define('FM.Application', {
       return false;
     }
     if (files.length === 1) {
-      if (panel.session.type === FM.Session.HOME) {
+      if ((panel.actions[action_name] != null) && panel.actions[action_name] === true) {
         if (FM.Actions.ExtractArchive.self.getName() === action_name && ((ref = files[0].get("ext")) === 'zip' || ref === 'rar' || ref === '7z' || ref === 'gz' || ref === 'bz2' || ref === 'arch' || ref === 'tar' || ref === 'tgz')) {
           return true;
         }
@@ -360,10 +360,10 @@ Ext.define('FM.Application', {
       return t("Unable to list folder. Permission Denied");
     }
     if (message.match(cant_create_file_ftp)) {
-      return t("Could not create file - ftp server error.<br/>Check your file or folder permissions");
+      return t("Could not create file - server error.<br/>Check your file or folder permissions");
     }
     if (message.match(cant_create_dir_ftp)) {
-      return t("Could not create dir - ftp server error.<br/>Check folder permissions or the dir already exists");
+      return t("Could not create dir - server error.<br/>Check folder permissions or the dir already exists");
     }
     if (message.match(no_such_file)) {
       return t("No such file or directory.");
@@ -900,6 +900,7 @@ Ext.define('FM.Application', {
     FM.Session = {};
     FM.Session.HOME = 'home';
     FM.Session.PUBLIC_FTP = 'public_ftp';
+    FM.Session.SFTP = 'sftp';
     FM.Session.PUBLIC_WEBDAV = 'public_webdav';
     FM.Session.LOCAL_APPLET = 'local_applet';
     FM.Status = {};

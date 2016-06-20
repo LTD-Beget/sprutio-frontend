@@ -5,7 +5,7 @@ Ext.define('FM.action.HomeFtp', {
     scale: "large",
     iconAlign: "top",
     iconCls: "fm-action-home",
-    text: t("Home FTP"),
+    text: t("Home server"),
     handler: function(panel) {
       FM.Logger.info('Run Action FM.action.HomeFtp', arguments);
       FM.helpers.SetLoading(panel.body, t("Loading..."));

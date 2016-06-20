@@ -10,7 +10,7 @@ Ext.define 'FM.controller.Index',
 
   requires: [
     'FM.action.HomeFtp'
-    'FM.action.RemoteFtp'
+    'FM.action.RemoteConnections'
     'FM.action.RemoteWebDav'
     'FM.action.Local'
 
@@ -32,7 +32,7 @@ Ext.define 'FM.controller.Index',
     'FM.action.Open'
     'FM.action.OpenFile'
     'FM.action.OpenSite'
-    'FM.action.OpenFtp'
+    'FM.action.OpenRemoteConnection'
     'FM.action.OpenWebDav'
     'FM.action.Navigate'
     'FM.action.CopyEntry'
@@ -59,7 +59,7 @@ Ext.define 'FM.controller.Index',
     'FM.action.Help'
     'FM.action.Logout'
 
-    'FM.store.FtpConnections'
+    'FM.store.Connections'
     'FM.store.WebDavConnections'
     'FM.store.Sites'
 
@@ -108,7 +108,7 @@ Ext.define 'FM.controller.Index',
     FM.Actions = {}
 
     FM.Actions.HomeFtp = Ext.create "FM.action.HomeFtp"
-    FM.Actions.RemoteFtp = Ext.create "FM.action.RemoteFtp"
+    FM.Actions.RemoteConnections = Ext.create "FM.action.RemoteConnections"
     FM.Actions.RemoteWebDav = Ext.create "FM.action.RemoteWebDav"
     FM.Actions.Local = Ext.create "FM.action.Local"
 
@@ -131,7 +131,7 @@ Ext.define 'FM.controller.Index',
     FM.Actions.Open = Ext.create "FM.action.Open"
     FM.Actions.OpenFile = Ext.create "FM.action.OpenFile"
     FM.Actions.OpenSite = Ext.create "FM.action.OpenSite"
-    FM.Actions.OpenFtp = Ext.create "FM.action.OpenFtp"
+    FM.Actions.OpenRemoteConnection = Ext.create "FM.action.OpenRemoteConnection"
     FM.Actions.OpenWebDav = Ext.create "FM.action.OpenWebDav"
     FM.Actions.Navigate = Ext.create "FM.action.Navigate"
     FM.Actions.CopyEntry = Ext.create "FM.action.CopyEntry"
@@ -160,7 +160,7 @@ Ext.define 'FM.controller.Index',
 
   initStores: () ->
     FM.Stores = {}
-    FM.Stores.FtpConenctions = Ext.create "FM.store.FtpConnections"
+    FM.Stores.Conenctions = Ext.create "FM.store.Connections"
     FM.Stores.WebDavConenctions = Ext.create "FM.store.WebDavConnections"
     FM.Stores.Sites = Ext.create "FM.store.Sites"
 

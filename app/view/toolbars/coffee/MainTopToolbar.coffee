@@ -277,11 +277,11 @@ Ext.define 'FM.view.toolbars.MainTopToolbar',
             FM.Actions.HomeFtp.execute(FM.Active)
         },
         {
-          text: FM.Actions.RemoteFtp.getMenuText()
-          name: FM.Actions.RemoteFtp.getIconCls()
-          iconCls: FM.Actions.RemoteFtp.getIconCls()
+          text: FM.Actions.RemoteConnections.getMenuText()
+          name: FM.Actions.RemoteConnections.getIconCls()
+          iconCls: FM.Actions.RemoteConnections.getIconCls()
           handler: () ->
-            FM.Actions.RemoteFtp.execute(FM.Active)
+            FM.Actions.RemoteConnections.execute(FM.Active)
         },
         {
           text: FM.Actions.RemoteWebDav.getMenuText()

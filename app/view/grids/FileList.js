@@ -38,6 +38,9 @@ Ext.define('FM.view.grids.FileList', {
       this.initHomeConfig();
       this.initHomeStore();
       panel.setShareStatus(listing.is_share, listing.is_share_write);
+    } else if ((session != null) && (session.type != null) && session.type === FM.Session.SFTP) {
+      this.initHomeConfig();
+      this.initHomeStore();
     } else if ((session != null) && (session.type != null) && session.type === FM.Session.PUBLIC_FTP) {
       this.initPublicFtpConfig();
       this.initPublicFtpStore();
