@@ -111,25 +111,44 @@ Ext.define 'FM.controller.HomeHandler',
                   }
 
                   connection_menu.push(connection_menu_element)
-              
-              if connection.type == 'webdav'
-                do(connection) ->
-                  connection_menu_element = {
-                    xtype: 'menuitem'
-                    text: connection.user + "@" + connection.host
-                    iconCls: 'fm-action-connect-webdav'
-                    handler: () =>
-                      FM.Actions.OpenRemoteConnection.execute panel,
-                        type: FM.Session.PUBLIC_WEBDAV
-                        path: '/'
-                        server_id: connection.id
-                  }
-                  
-                  connection_menu.push(connection_menu_element)
 
           if connection_menu.length > 0
             menu_element.menu = connection_menu
           fast_menu.items.push(menu_element)
+
+        # WebDav menu
+        if data.webdav_connections? && data.webdav_connections.length > 0
+          webdav_menu_element = {
+            xtype: 'menuitem',
+            text: FM.Actions.RemoteWebDav.getMenuText()
+            iconCls: FM.Actions.RemoteWebDav.getIconCls()
+            handler: () =>
+              FM.Actions.RemoteWebDav.execute()
+          }
+
+          webdav_connection_menu = []
+
+          # тормозят контекстные меню если они большие, поэтому в целях оптимизации их нет если оч много объектов
+          if data.webdav_connections.length <= 100
+            for connection in data.webdav_connections
+              do(connection) ->
+                webdav_connection_menu_element = {
+                  xtype: 'menuitem'
+                  text: connection.user + "@" + connection.host
+                  iconCls: 'fm-action-connect-webdav'
+                  handler: () =>
+                    FM.Actions.OpenWebDav.execute panel,
+                      type: FM.Session.PUBLIC_WEBDAV
+                      path: '/'
+                      server_id: connection.id
+                }
+
+                webdav_connection_menu.push(webdav_connection_menu_element)
+
+          if webdav_connection_menu.length > 0
+            webdav_menu_element.menu = webdav_connection_menu
+          fast_menu.items.push(webdav_menu_element)
+
 
         panel.setFastMenu(fast_menu)
 
