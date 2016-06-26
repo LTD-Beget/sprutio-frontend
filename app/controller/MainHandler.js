@@ -262,6 +262,12 @@ Ext.define('FM.controller.MainHandler', {
           iconCls: FM.Actions.RemoteConnections.getIconCls()
         });
       }
+      if (panel.session.type === FM.Session.PUBLIC_WEBDAV) {
+        button.setConfig({
+          text: FM.Actions.RemoteWebDav.getMenuText(),
+          iconCls: FM.Actions.RemoteWebDav.getIconCls()
+        });
+      }
       if (panel.session.type === FM.Session.LOCAL_APPLET) {
         button.setConfig({
           text: FM.Actions.Local.getMenuText(),

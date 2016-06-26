@@ -44,6 +44,9 @@ Ext.define('FM.view.grids.FileList', {
     } else if ((session != null) && (session.type != null) && session.type === FM.Session.PUBLIC_FTP) {
       this.initPublicFtpConfig();
       this.initPublicFtpStore();
+    } else if ((session != null) && (session.type != null) && session.type === FM.Session.PUBLIC_WEBDAV) {
+      this.initPublicWebDavConfig();
+      this.initPublicWebDavStore();
     } else if ((session != null) && (session.type != null) && session.type === FM.Session.LOCAL_APPLET) {
       this.initLocalAppletConfig();
       this.initLocalAppletStore();
@@ -529,6 +532,173 @@ Ext.define('FM.view.grids.FileList', {
       selectionchange: this.handlers.gridview.selectionchange
     });
   },
+  initPublicWebDavConfig: function() {
+    var gridView;
+    FM.Logger.debug("initPublicWebDavConfig() called", arguments);
+    this.setConfig({
+      columns: [
+        {
+          header: t("Name"),
+          dataIndex: "name",
+          hideable: false,
+          draggable: false,
+          flex: true,
+          sort: function(direction) {
+            var dir, field, grid, koef, sorter, store;
+            grid = this.up('tablepanel');
+            store = grid.store;
+            if (direction == null) {
+              dir = this.sortState === 'ASC' ? 'DESC' : 'ASC';
+            } else {
+              dir = direction;
+            }
+            koef = dir === 'ASC' ? 1 : -1;
+            field = [];
+            sorter = Ext.create('Ext.util.Sorter', {
+              direction: dir,
+              sorterFn: function(a, b) {
+                var adir, an, bdir, bn;
+                an = a.get('name');
+                bn = b.get('name');
+                adir = a.get('is_dir');
+                bdir = b.get('is_dir');
+                if (an === '..') {
+                  return -1 * koef;
+                } else if (bn === '..') {
+                  return koef;
+                } else if (adir === bdir) {
+                  if (an > bn) {
+                    return 1;
+                  } else {
+                    return -1;
+                  }
+                } else {
+                  if (adir) {
+                    return -1;
+                  } else if (bdir) {
+                    return 1;
+                  }
+                  if (an > bn) {
+                    return 1;
+                  } else {
+                    return -1;
+                  }
+                }
+              }
+            });
+            field.push(sorter);
+            Ext.suspendLayouts();
+            this.sorting = true;
+            store.sort(field, void 0, grid.multiColumnSort ? 'multi' : 'replace');
+            (function(_this) {
+              return (function(sorter) {
+                var ascCls, changed, descCls, rootHeaderCt;
+                direction = sorter.getDirection();
+                ascCls = _this.ascSortCls;
+                descCls = _this.descSortCls;
+                rootHeaderCt = _this.getRootHeaderCt();
+                changed = void 0;
+                if (direction === 'DESC') {
+                  if (!_this.hasCls(descCls)) {
+                    _this.addCls(descCls);
+                    _this.sortState = 'DESC';
+                    changed = true;
+                  }
+                  _this.removeCls(ascCls);
+                } else if (direction === 'ASC') {
+                  if (!_this.hasCls(ascCls)) {
+                    _this.addCls(ascCls);
+                    _this.sortState = 'ASC';
+                    changed = true;
+                  }
+                  _this.removeCls(descCls);
+                } else {
+                  _this.removeCls([ascCls, descCls]);
+                  _this.sortState = null;
+                }
+                if (changed) {
+                  return rootHeaderCt.fireEvent('sortchange', rootHeaderCt, _this, direction);
+                }
+              });
+            })(this)(sorter);
+            delete this.sorting;
+            return Ext.resumeLayouts(true);
+          },
+          renderer: function(value, metaData, record) {
+            var ext, is_dir, is_link, is_share;
+            is_dir = record.get("is_dir");
+            is_link = record.get("is_link");
+            is_share = record.get("is_share");
+            ext = '';
+            if (is_dir) {
+              ext = "_dir";
+            } else {
+              ext = record.get("ext").toLowerCase();
+            }
+            if (is_link) {
+              ext = "_link";
+            }
+            if (is_share) {
+              ext = "_share";
+            }
+            metaData.style = "background-image: url(/fm/resources/images/sprites/icons_16.png)";
+            metaData.tdCls = ext !== '' ? "cell-icon icon-16-" + ext : "cell-icon icon-16-_blank";
+            if (is_dir) {
+              return value;
+            } else {
+              return FM.helpers.GetFileName(value);
+            }
+          }
+        }, {
+          header: t("Type"),
+          dataIndex: "ext",
+          width: 55
+        }, {
+          header: t("Size"),
+          dataIndex: "size",
+          width: 60,
+          renderer: function(value, metaData, record) {
+            if (record.get("is_dir") && !record.get('loaded')) {
+              return "[DIR]";
+            }
+            if (record.get("is_link")) {
+              return "[LINK]";
+            }
+            return Ext.util.Format.fileSize(value);
+          }
+        }, {
+          header: t("Owner"),
+          dataIndex: "owner",
+          hidden: false
+        }, {
+          header: t("Base64"),
+          dataIndex: "base64",
+          hidden: true
+        }, {
+          header: t("Attributes"),
+          dataIndex: "mode",
+          width: 55
+        }, {
+          header: t("Modified"),
+          dataIndex: "mtime",
+          width: 125,
+          renderer: function(value, metaData, record) {
+            return record.get("mtime_str");
+          }
+        }
+      ]
+    });
+    gridView = this.getView();
+    return gridView.on({
+      beforecontainermousedown: this.handlers.gridview.beforecontainermousedown,
+      beforeitemmousedown: this.handlers.gridview.beforeitemmousedown,
+      itemdblclick: this.handlers.gridview.itemdblclick,
+      itemkeydown: this.handlers.gridview.itemkeydown,
+      itemcontextmenu: this.handlers.gridview.itemcontextmenu,
+      containercontextmenu: this.handlers.gridview.containercontextmenu,
+      selectionchange: this.handlers.gridview.selectionchange
+    });
+  },
   initLocalAppletConfig: function() {
     var gridView;
     this.setConfig({
@@ -627,6 +797,22 @@ Ext.define('FM.view.grids.FileList', {
   initPublicFtpStore: function() {
     var store;
     FM.Logger.debug("initPublicFtpStore() called", arguments);
+    store = Ext.create("Ext.data.Store", {
+      autoLoad: false,
+      sortOnLoad: true,
+      model: 'FM.model.File',
+      sorters: [
+        {
+          property: "name",
+          direction: "ASC"
+        }
+      ]
+    });
+    return this.setStore(store);
+  },
+  initPublicWebDavStore: function() {
+    var store;
+    FM.Logger.debug("initPublicWebDavStore() called", arguments);
     store = Ext.create("Ext.data.Store", {
       autoLoad: false,
       sortOnLoad: true,
