@@ -121,7 +121,7 @@ Ext.define('FM.view.toolbars.WebDavConnectionListTopToolbar', {
           plugin.editor.floatingButtons.items.get(0).setText(t("Save"));
           plugin.editor.floatingButtons.items.get(1).setText(t("Cancel"));
           return plugin.startAdd({
-            host: "webdav.domain.com",
+            host: "",
             user: "user",
             decryptedPassword: "password"
           });

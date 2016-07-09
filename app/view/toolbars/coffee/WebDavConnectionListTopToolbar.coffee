@@ -104,7 +104,7 @@ Ext.define 'FM.view.toolbars.WebDavConnectionListTopToolbar',
         plugin.editor.floatingButtons.items.get(1).setText(t("Cancel"))
 
         plugin.startAdd
-          host: "webdav.domain.com"
+          host: ""
           user: "user"
           decryptedPassword: "password"
 
