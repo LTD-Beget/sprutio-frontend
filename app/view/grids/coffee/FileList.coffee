@@ -41,10 +41,10 @@ Ext.define 'FM.view.grids.FileList',
     else if session? and session.type? and session.type == FM.Session.SFTP
       @initHomeConfig()
       @initHomeStore()
-    else if session? and session.type? and session.type == FM.Session.PUBLIC_FTP
+    else if session? and session.type? and session.type == FM.Session.FTP
       @initPublicFtpConfig()
       @initPublicFtpStore()
-    else if session? and session.type? and session.type == FM.Session.PUBLIC_WEBDAV
+    else if session? and session.type? and session.type == FM.Session.WEBDAV
       @initPublicWebDavConfig()
       @initPublicWebDavStore()
     else if session? and session.type? and session.type == FM.Session.LOCAL_APPLET

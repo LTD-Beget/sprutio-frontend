@@ -18,6 +18,6 @@ Ext.define 'FM.model.WebDavConnection',
   initConneciton: (panel) ->
     FM.Logger.debug('WebDavConnection initConnection() called', arguments)
     FM.Actions.OpenWebDav.execute panel,
-      type: FM.Session.PUBLIC_WEBDAV
+      type: FM.Session.WEBDAV
       path: '/'
       server_id: @get('id')

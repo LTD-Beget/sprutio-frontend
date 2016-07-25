@@ -50,7 +50,7 @@ Ext.define 'FM.action.Copy',
           FM.backend.ajaxSend '/actions/main/check_status',
           params:
             # передаем сессию home если копирование идет на него с удаленного ftp так как прогресс получаем через агента
-            session: if (session.type == FM.Session.PUBLIC_FTP or session.type == FM.Session.SFTP) and target_session.type == FM.Session.HOME then target_session else session
+            session: if (session.type == FM.Session.FTP or session.type == FM.Session.SFTP) and target_session.type == FM.Session.HOME then target_session else session
             status: status
           success: (response) =>
             status = Ext.util.JSON.decode(response.responseText).data

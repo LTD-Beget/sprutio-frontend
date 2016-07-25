@@ -202,7 +202,7 @@ Ext.define 'FM.controller.MainHandler',
           text: FM.Actions.HomeFtp.getMenuText()
           iconCls: FM.Actions.HomeFtp.getIconCls()
 
-      if panel.session.type == FM.Session.PUBLIC_FTP
+      if panel.session.type == FM.Session.FTP
         button.setConfig
           text: FM.Actions.RemoteConnections.getMenuText()
           iconCls: FM.Actions.RemoteConnections.getIconCls()
@@ -212,7 +212,7 @@ Ext.define 'FM.controller.MainHandler',
           text: FM.Actions.RemoteConnections.getMenuText()
           iconCls: FM.Actions.RemoteConnections.getIconCls()
 
-      if panel.session.type == FM.Session.PUBLIC_WEBDAV
+      if panel.session.type == FM.Session.WEBDAV
         button.setConfig
           text: FM.Actions.RemoteWebDav.getMenuText()
           iconCls: FM.Actions.RemoteWebDav.getIconCls()

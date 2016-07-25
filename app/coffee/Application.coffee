@@ -919,9 +919,9 @@ Ext.define 'FM.Application',
   initConstants: () ->
     FM.Session = {}
     FM.Session.HOME = 'home'
-    FM.Session.PUBLIC_FTP = 'public_ftp'
+    FM.Session.FTP = 'ftp'
     FM.Session.SFTP = 'sftp'
-    FM.Session.PUBLIC_WEBDAV = 'public_webdav'
+    FM.Session.WEBDAV = 'webdav'
     FM.Session.LOCAL_APPLET = 'local_applet'
 
     FM.Status = {}

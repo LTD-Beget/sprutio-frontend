@@ -33,6 +33,6 @@ Ext.define 'FM.model.Connection',
     if @get('type') == 'ftp' or @get('type') == ''
       FM.Logger.debug('Connection initConnection() FTP called', arguments)
       FM.Actions.OpenRemoteConnection.execute panel,
-        type: FM.Session.PUBLIC_FTP
+        type: FM.Session.FTP
         path: '/'
         server_id: @get('id')

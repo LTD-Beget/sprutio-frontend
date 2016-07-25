@@ -118,7 +118,7 @@ Ext.define('FM.controller.HomeHandler', {
                     handler: (function(_this) {
                       return function() {
                         return FM.Actions.OpenRemoteConnection.execute(panel, {
-                          type: FM.Session.PUBLIC_FTP,
+                          type: FM.Session.FTP,
                           path: '/',
                           server_id: connection.id
                         });
@@ -158,7 +158,7 @@ Ext.define('FM.controller.HomeHandler', {
                 handler: (function(_this) {
                   return function() {
                     return FM.Actions.OpenWebDav.execute(panel, {
-                      type: FM.Session.PUBLIC_WEBDAV,
+                      type: FM.Session.WEBDAV,
                       path: '/',
                       server_id: connection.id
                     });

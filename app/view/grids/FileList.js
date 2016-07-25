@@ -41,10 +41,10 @@ Ext.define('FM.view.grids.FileList', {
     } else if ((session != null) && (session.type != null) && session.type === FM.Session.SFTP) {
       this.initHomeConfig();
       this.initHomeStore();
-    } else if ((session != null) && (session.type != null) && session.type === FM.Session.PUBLIC_FTP) {
+    } else if ((session != null) && (session.type != null) && session.type === FM.Session.FTP) {
       this.initPublicFtpConfig();
       this.initPublicFtpStore();
-    } else if ((session != null) && (session.type != null) && session.type === FM.Session.PUBLIC_WEBDAV) {
+    } else if ((session != null) && (session.type != null) && session.type === FM.Session.WEBDAV) {
       this.initPublicWebDavConfig();
       this.initPublicWebDavStore();
     } else if ((session != null) && (session.type != null) && session.type === FM.Session.LOCAL_APPLET) {

@@ -16,7 +16,7 @@ Ext.define('FM.model.WebDavConnection', {
   initConneciton: function(panel) {
     FM.Logger.debug('WebDavConnection initConnection() called', arguments);
     return FM.Actions.OpenWebDav.execute(panel, {
-      type: FM.Session.PUBLIC_WEBDAV,
+      type: FM.Session.WEBDAV,
       path: '/',
       server_id: this.get('id')
     });
