@@ -70,28 +70,21 @@ Ext.define 'FM.action.ExtractArchive',
       else
         FM.getApplication().fireEvent(FM.Events.archive.extractArchive, status, session, progress_window, params)
     else
-      if session.type == FM.Session.LOCAL_APPLET
-        try
-          FM.Active.applet.extract(progress_window, session, params)
-        catch
-          FM.Logger.error("Applet error")
-          FM.helpers.ShowError(t("Error during operation. Please contact Support."))
-      else
-        FM.backend.ajaxSend '/actions/archive/extract',
-          params:
-            session: session
-            params: params
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
-            progress_window.setOperationStatus(status)
-            progress_window.show()
-            @process(progress_window, session, params, status)
+      FM.backend.ajaxSend '/actions/archive/extract',
+        params:
+          session: session
+          params: params
+        success: (response) =>
+          status = Ext.util.JSON.decode(response.responseText).data
+          progress_window.setOperationStatus(status)
+          progress_window.show()
+          @process(progress_window, session, params, status)
 
-          failure: (response) =>
-            FM.Logger.debug(response)
+        failure: (response) =>
+          FM.Logger.debug(response)
 
-            FM.helpers.ShowError(t("Error during archive extracting operation start.<br/> Please contact Support."))
-            FM.Logger.error(response)
+          FM.helpers.ShowError(t("Error during archive extracting operation start.<br/> Please contact Support."))
+          FM.Logger.error(response)
 
   cancel: (progress_window, session, status) ->
     FM.backend.ajaxSend '/actions/main/cancel_operation',

@@ -50,53 +50,45 @@ Ext.define 'FM.action.Move',
       if status.status? and (status.status == FM.Status.STATUS_RUNNING or status.status == FM.Status.STATUS_WAIT)
         setTimeout () =>
           FM.backend.ajaxSend '/actions/main/check_status',
-          params:
-            session: session
-            status: status
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
+            params:
+              session: session
+              status: status
+            success: (response) =>
+              status = Ext.util.JSON.decode(response.responseText).data
 
-            if status.progress? and (status.progress.text? or status.progress.percent?)
-              text = if status.progress.text? then status.progress.text else ''
-              percent = if status.progress.percent? then status.progress.percent else 0
-              progress_window.updateProgress(percent, text)
-            else
-              progress_window.updateProgressText(t("Moving files..."))
+              if status.progress? and (status.progress.text? or status.progress.percent?)
+                text = if status.progress.text? then status.progress.text else ''
+                percent = if status.progress.percent? then status.progress.percent else 0
+                progress_window.updateProgress(percent, text)
+              else
+                progress_window.updateProgressText(t("Moving files..."))
 
-            @process(progress_window, session, target_session, paths, overwrite, status)
+              @process(progress_window, session, target_session, paths, overwrite, status)
 
-          failure: (response) =>
-            FM.helpers.ShowError(t("Error during check operation status.<br/>Please contact Support."))
-            FM.Logger.error(response)
+            failure: (response) =>
+              FM.helpers.ShowError(t("Error during check operation status.<br/>Please contact Support."))
+              FM.Logger.error(response)
         ,
           FM.Time.REQUEST_DELAY
       else
         FM.getApplication().fireEvent(FM.Events.file.moveFiles, status, session, target_session, progress_window)
     else
-      if session.type == FM.Session.LOCAL_APPLET
-        try
+      FM.backend.ajaxSend '/actions/files/move',
+        params:
+          session: session
+          target: target_session
+          paths: paths
+          overwrite: overwrite
+        success: (response) =>
+          status = Ext.util.JSON.decode(response.responseText).data
+
+          progress_window.setOperationStatus(status)
           progress_window.show()
-          FM.Active.applet.move(paths, session, target_session, overwrite, progress_window)
-        catch
-          FM.Logger.error("Applet error")
-          FM.helpers.ShowError(t("Error during operation. Please contact Support."))
-      else
-        FM.backend.ajaxSend '/actions/files/move',
-          params:
-            session: session
-            target: target_session
-            paths: paths
-            overwrite: overwrite
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
+          @process(progress_window, session, target_session, paths, overwrite, status)
 
-            progress_window.setOperationStatus(status)
-            progress_window.show()
-            @process(progress_window, session, target_session, paths, overwrite, status)
-
-          failure: (response) =>
-            FM.helpers.ShowError(t("Error during move operation start. Please contact Support."))
-            FM.Logger.error(response)
+        failure: (response) =>
+          FM.helpers.ShowError(t("Error during move operation start. Please contact Support."))
+          FM.Logger.error(response)
 
   cancel: (progress_window, session, target_session, status) ->
     FM.backend.ajaxSend '/actions/main/cancel_operation',

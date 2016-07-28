@@ -131,27 +131,27 @@ Ext.define 'FM.view.windows.EditorWindow',
     @updateToolbar()
     @updateSettings()
 
-#    FM.helpers.SetLoading(@body, t("Applying settings..."))
-#    FM.backend.ajaxSend '/actions/files/read',
-#      params:
-#        session: @getSession()
-#        path: FM.helpers.GetAbsName(@getSession(), @fileRecord)
-#        encoding: encoding
-#      success: (response) =>
-#        response_data = Ext.util.JSON.decode(response.responseText).data
-#        FM.helpers.UnsetLoading(@body)
-#        @fileContent = response_data.content
-#        @editor.setValue(@fileContent)
-#        @fileEncoding = encoding
-#        @updateToolbar()
-#        @updateSettings()
-#
-#      failure: (response) =>
-#        FM.helpers.UnsetLoading(@body)
-#        json_response = Ext.util.JSON.decode(response.responseText)
-#        error = FM.helpers.ParseErrorMessage(json_response.message, t("Error during reading file.<br/> Please contact Support."))
-#        FM.helpers.ShowError(error)
-#        FM.Logger.error(response)
+    FM.helpers.SetLoading(@body, t("Applying settings..."))
+    FM.backend.ajaxSend '/actions/files/read',
+      params:
+        session: @getSession()
+        path: FM.helpers.GetAbsName(@getSession(), @fileRecord)
+        encoding: encoding
+      success: (response) =>
+        response_data = Ext.util.JSON.decode(response.responseText).data
+        FM.helpers.UnsetLoading(@body)
+        @fileContent = response_data.content
+        @editor.setValue(@fileContent)
+        @fileEncoding = encoding
+        @updateToolbar()
+        @updateSettings()
+
+      failure: (response) =>
+        FM.helpers.UnsetLoading(@body)
+        json_response = Ext.util.JSON.decode(response.responseText)
+        error = FM.helpers.ParseErrorMessage(json_response.message, t("Error during reading file.<br/> Please contact Support."))
+        FM.helpers.ShowError(error)
+        FM.Logger.error(response)
 
   changeSyntax: (syntax) ->
     FM.Logger.debug('FM.view.windows.EditorWindow changeSyntax() called', arguments)

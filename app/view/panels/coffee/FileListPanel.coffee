@@ -46,7 +46,7 @@ Ext.define 'FM.view.panels.FileListPanel',
 
     items = []
 
-    if FM.helpers.isAllowed(FM.Actions.NewFile, @, [])
+    if FM.helpers.isAllowed(FM.Actions.NewFile, @, []) and @session.type != 'webdav'
       items.push
         text: FM.Actions.NewFile.getMenuText()
         iconCls: FM.Actions.NewFile.getIconCls()
@@ -93,7 +93,6 @@ Ext.define 'FM.view.panels.FileListPanel',
     @session.is_share_write = if is_share_write == 1 then true else false
 
   getContextMenu: (record) ->
-
     FM.Logger.debug("getContextMenu() called ", record, @session)
     selection_array = @filelist.getView().getSelectionModel().getSelection();
     select_multiply = false;

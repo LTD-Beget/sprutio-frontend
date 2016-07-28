@@ -220,7 +220,6 @@ Ext.define 'FM.Application',
     allowed_no_files[FM.Actions.Upload.self.getName()] = true
     allowed_no_files[FM.Actions.SearchFiles.self.getName()] = true
     allowed_no_files[FM.Actions.SearchText.self.getName()] = true
-    allowed_no_files[FM.Actions.AnalyzeSize.self.getName()] = true
     allowed_no_files[FM.Actions.NewFile.self.getName()] = true
     allowed_no_files[FM.Actions.NewFolder.self.getName()] = true
     allowed_no_files[FM.Actions.IPBlock.self.getName()] = true
@@ -233,7 +232,7 @@ Ext.define 'FM.Application',
 
     if allowed_no_files[action_name]? and allowed_no_files[action_name]
       if panel.actions? and panel.actions[action_name]?
-        return if panel.actions[action_name] then true else false
+        return panel.actions[action_name]
 
     if files.length == 0
       return false
@@ -254,6 +253,7 @@ Ext.define 'FM.Application',
     allowed_multiple[FM.Actions.Remove.self.getName()] = true
 
     allowed_dir[FM.Actions.Open.self.getName()] = true
+    allowed_dir[FM.Actions.AnalyzeSize.self.getName()] = true
     allowed_dir[FM.Actions.DownloadArchive.self.getName()] = true
     allowed_dir[FM.Actions.DownloadZip.self.getName()] = true
     allowed_dir[FM.Actions.DownloadBZ2.self.getName()] = true
@@ -268,20 +268,14 @@ Ext.define 'FM.Application',
     allowed_dir[FM.Actions.Rename.self.getName()] = true
     allowed_dir[FM.Actions.Refresh.self.getName()] = true
 
-    # panels
-    next_panel = FM.helpers.NextPanel(panel)
-    if action_name == FM.Actions.Copy.self.getName() and next_panel.session.type == FM.Session.LOCAL_APPLET
-      return false
-
-    if action_name == FM.Actions.Move.self.getName() and next_panel.session.type == FM.Session.LOCAL_APPLET
-      return false
-
     # hacks
     if files.length == 1
-      #if panel.session.type == FM.Session.HOME
       if panel.actions[action_name]? and  panel.actions[action_name] == true
-        if FM.Actions.ExtractArchive.self.getName() == action_name and files[0].get("ext") in ['zip','rar', '7z', 'gz', 'bz2', 'arch', 'tar', 'tgz']
-          return true
+        if FM.Actions.ExtractArchive.self.getName() == action_name
+          return files[0].get("ext") in ['zip','rar', '7z', 'gz', 'bz2', 'arch', 'tar', 'tgz']
+
+        if files[0].get("ext") in ['zip','rar', '7z', 'gz', 'bz2', 'arch', 'tar', 'tgz'] and (FM.Actions.Edit.self.getName() == action_name or FM.Actions.View.self.getName() == action_name)
+          return false
 
       if files[0].get('is_link')
         return false
@@ -290,6 +284,9 @@ Ext.define 'FM.Application',
         return false
 
       if !files[0].get('is_dir') and !files[0].get('is_link') and FM.Actions.Open.self.getName() == action_name
+        return false
+
+      if !files[0].get('is_dir') and !files[0].get('is_link') and FM.Actions.AnalyzeSize.self.getName() == action_name
         return false
 
     if files.length > 1
@@ -301,7 +298,7 @@ Ext.define 'FM.Application',
     if files.length == 1
       if panel.actions[action_name]?
         panel_action = panel.actions[action_name]
-        record_actions = files[0].get('actions')
+        record_actions = files[0].actions
 
         if record_actions? and record_actions[action_name]?
           record_action = record_actions[action_name]
@@ -922,7 +919,6 @@ Ext.define 'FM.Application',
     FM.Session.FTP = 'ftp'
     FM.Session.SFTP = 'sftp'
     FM.Session.WEBDAV = 'webdav'
-    FM.Session.LOCAL_APPLET = 'local_applet'
 
     FM.Status = {}
     FM.Status.STATUS_WAIT = 'wait'

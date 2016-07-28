@@ -54,7 +54,7 @@ Ext.define 'FM.view.grids.ConnectionList',
           event.preventDefault()
           event.stopPropagation()
           event.stopEvent()
-          record.initConneciton(FM.Active)
+          record.initConnection(FM.Active)
           dialog.close()
 
       selection.on

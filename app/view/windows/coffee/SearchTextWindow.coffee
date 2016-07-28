@@ -28,7 +28,7 @@ Ext.define 'FM.view.windows.SearchTextWindow',
     {
       xtype: 'file-search-list'
     }
-  ],
+  ]
   listeners:
     show:
       fn: () ->
@@ -51,6 +51,7 @@ Ext.define 'FM.view.windows.SearchTextWindow',
           ]
 
         Ext.ComponentQuery.query('textfield[name=search-text-path]', @)[0].setValue(@session.path)
+        @updateSearchFilterState(true)
 
     resize:
       fn: () ->
@@ -59,6 +60,8 @@ Ext.define 'FM.view.windows.SearchTextWindow',
 
         h = @getHeight()
         grid.setHeight(h-295)
+
+  fileListStore: null
 
   initComponent: () ->
     @search_btn = Ext.create 'Ext.button.Button',
@@ -116,6 +119,11 @@ Ext.define 'FM.view.windows.SearchTextWindow',
 
   hasOperationStatus: () ->
     return if @operationStatus? then true else false
+
+  updateSearchFilterState: (state) ->
+    searchFilter = Ext.ComponentQuery.query('searchfield[name=search-text-filter]', @)[0]
+    searchFilter.setDisabled(state)
+
 
   getOperationStatus: () ->
     return @operationStatus

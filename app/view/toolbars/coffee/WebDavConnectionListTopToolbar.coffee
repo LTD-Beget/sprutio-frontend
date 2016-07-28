@@ -133,7 +133,8 @@ Ext.define 'FM.view.toolbars.WebDavConnectionListTopToolbar',
             connection = row[0]
             grid.getStore().remove(connection)
 
-            FM.backend.ajaxSend '/actions/webdav/remove',
+            if connection.get('id').indexOf('FM.model.WebDavConnection') == -1
+              FM.backend.ajaxSend '/actions/webdav/remove',
               params:
                 params:
                   id: connection.get('id')

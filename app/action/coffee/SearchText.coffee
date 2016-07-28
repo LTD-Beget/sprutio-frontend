@@ -20,7 +20,6 @@ Ext.define 'FM.action.SearchText',
         taskBar: bottom_toolbar
         taskBar: bottom_toolbar
         search: (button, search_window, e, params) =>
-
           search_window.cancel_btn.setVisible(true)
           button.setVisible(false)
           files_list = Ext.ComponentQuery.query("file-search-list", search_window)[0]
@@ -42,53 +41,46 @@ Ext.define 'FM.action.SearchText',
       if status.status? and (status.status == FM.Status.STATUS_RUNNING or status.status == FM.Status.STATUS_WAIT)
         setTimeout () =>
           FM.backend.ajaxSend '/actions/main/check_status',
-          params:
-            session: session
-            status: status
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
-            @process(button, search_window, session, params, files_list, status)
+            params:
+              session: session
+              status: status
+            success: (response) =>
+              status = Ext.util.JSON.decode(response.responseText).data
+              @process(button, search_window, session, params, files_list, status)
 
-          failure: (response) =>
-            json_response = Ext.util.JSON.decode(response.responseText)
-            error = FM.helpers.ParseErrorMessage(json_response.message, t("Error during check operation status.<br/>Please contact Support."))
-            FM.helpers.ShowError(error)
-            FM.Logger.error(response)
+            failure: (response) =>
+              json_response = Ext.util.JSON.decode(response.responseText)
+              error = FM.helpers.ParseErrorMessage(json_response.message, t("Error during check operation status.<br/>Please contact Support."))
+              FM.helpers.ShowError(error)
+              FM.Logger.error(response)
 
-            button.setVisible(false)
-            search_window.search_btn.setVisible(true)
-            FM.helpers.UnsetLoading(files_list)
+              button.setVisible(false)
+              search_window.search_btn.setVisible(true)
+              FM.helpers.UnsetLoading(files_list)
         ,
           FM.Time.REQUEST_DELAY
       else
         FM.Logger.debug('ready to fire event FM.Events.search.findText', status, session, search_window, files_list)
         FM.getApplication().fireEvent(FM.Events.search.findText, status, session, search_window, files_list)
     else
-      if session.type == FM.Session.LOCAL_APPLET
-        try
-          FM.Active.applet.search_files(button, search_window, session, params, files_list)
-        catch
-          FM.Logger.error("Applet error")
-          FM.helpers.ShowError(t("Error during operation. Please contact Support."))
-      else
-        FM.backend.ajaxSend '/actions/find/text',
-          params:
-            session: session
-            params: params
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
-            search_window.setOperationStatus(status)
-            @process(button, search_window, session, params, files_list, status)
+      FM.backend.ajaxSend '/actions/find/text',
+        params:
+          session: session
+          params: params
+        success: (response) =>
+          status = Ext.util.JSON.decode(response.responseText).data
+          search_window.setOperationStatus(status)
+          @process(button, search_window, session, params, files_list, status)
 
-          failure: (response) =>
-            FM.Logger.debug(response)
+        failure: (response) =>
+          FM.Logger.debug(response)
 
-            search_window.cancel_btn.setVisible(false)
-            button.setVisible(true)
-            FM.helpers.UnsetLoading(files_list)
+          search_window.cancel_btn.setVisible(false)
+          button.setVisible(true)
+          FM.helpers.UnsetLoading(files_list)
 
-            FM.helpers.ShowError(t("Error during text searching operation start.<br/> Please contact Support."))
-            FM.Logger.error(response)
+          FM.helpers.ShowError(t("Error during text searching operation start.<br/> Please contact Support."))
+          FM.Logger.error(response)
 
   cancel: (button, search_window, session, status, files_list) ->
     FM.Logger.debug('FM.action.SearchText cancel() called = ', arguments)
@@ -99,7 +91,7 @@ Ext.define 'FM.action.SearchText',
           session: session
           status: status
         success: () ->
-          #pass
+#pass
 
         failure: (response) ->
           button.setVisible(false)
