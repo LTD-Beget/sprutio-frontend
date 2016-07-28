@@ -297,6 +297,30 @@ Ext.define 'FM.view.toolbars.MainTopToolbar',
 
     @items.push "->"
 
+    @items.push
+      xtype: "button"
+      text: t("Language"),
+      menu:
+        xtype: 'menu'
+        items: [
+          {
+            text: t("Русский")
+            href: "/?language=ru"
+            iconCls: 'fm-icon-lang-ru'
+          },
+          {
+            text: t("English")
+            href: "/?language=en"
+            iconCls: 'fm-icon-lang-en'
+          },
+          {
+            text: t("Deutsch")
+            href: "/?language=de"
+            iconCls: 'fm-icon-lang-de'
+          },
+        ]
+
+
     @items.push FM.Actions.Help
     @items.push FM.Actions.Logout
 

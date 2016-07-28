@@ -334,6 +334,28 @@ Ext.define('FM.view.toolbars.MainTopToolbar', {
       ]
     });
     this.items.push("->");
+    this.items.push({
+      xtype: "button",
+      text: t("Language"),
+      menu: {
+        xtype: 'menu',
+        items: [
+          {
+            text: t("Русский"),
+            href: "/?language=ru",
+            iconCls: 'fm-icon-lang-ru'
+          }, {
+            text: t("English"),
+            href: "/?language=en",
+            iconCls: 'fm-icon-lang-en'
+          }, {
+            text: t("Deutsch"),
+            href: "/?language=de",
+            iconCls: 'fm-icon-lang-de'
+          }
+        ]
+      }
+    });
     this.items.push(FM.Actions.Help);
     this.items.push(FM.Actions.Logout);
     return this.callParent(arguments);
