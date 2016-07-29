@@ -84,7 +84,7 @@ Ext.define 'FM.controller.HomeHandler',
                     text: connection.user + "@" + connection.host
                     iconCls: 'fm-action-connect-ftp'
                     handler: () =>
-                      FM.Actions.OpenSftp.execute panel,
+                      FM.Actions.OpenRemoteConnection.execute panel,
                         type: FM.Session.SFTP
                         path: '.'
                         server_id: connection.id
