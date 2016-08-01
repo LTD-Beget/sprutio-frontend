@@ -97,7 +97,7 @@ Ext.define('FM.controller.HomeHandler', {
                     iconCls: 'fm-action-connect-ftp',
                     handler: (function(_this) {
                       return function() {
-                        return FM.Actions.OpenSftp.execute(panel, {
+                        return FM.Actions.OpenRemoteConnection.execute(panel, {
                           type: FM.Session.SFTP,
                           path: '.',
                           server_id: connection.id
