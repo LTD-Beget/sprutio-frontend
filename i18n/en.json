@@ -280,6 +280,7 @@
   "There are {0} items with simillar names identified.<br/>Do you need to overwrite them?": "There are {0} items with simillar names identified.<br/>Do you need to overwrite them?",
   "This folder seems already protected by password. You can remove or modify it.": "This folder seems already protected by password. You can remove or modify it.",
   "Cannot move folder in its subfolder": "Cannot move folder in its subfolder",
+  "Cannot copy folder in its subfolder": "Cannot copy folder in its subfolder",
   "To this folder": "To this folder",
   "Tools": "Tools",
   "Type": "Type",

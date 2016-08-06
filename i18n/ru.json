@@ -284,6 +284,7 @@
   "{0} items with matching names have been identified.<br/>Would you like to overwrite them?": "Найден(о) {0} файл(а) с совпадающими именами.<br/>Перезаписать данные файлы?",
   "This folder seems to already be protected by a password. You can remove or modify it.": "Данная папка возможно уже защищена паролем. Вы можете изменить или удалить его.",
   "Cannot move folder in its subfolder": "Невозможно переместить папку в собственную вложенную директорию",
+  "Cannot copy folder in its subfolder": "Невозможно скопировать папку в собственную вложенную директорию",
   "To this folder": "В эту папку",
   "Tools": "Инструменты",
   "Type": "Тип",

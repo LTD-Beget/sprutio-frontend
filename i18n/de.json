@@ -284,6 +284,7 @@
   "{0} items with matching names have been identified.<br/>Would you like to overwrite them?": "{0} Datei(en) mit übereinstimmenden Namen gefunden.<br/>Diese Dateien überschreiben?",
   "This folder seems to already be protected by a password. You can remove or modify it.": "Möglicherweise ist dieser Ordner bereits durch ein Kennwort geschützt. Sie können dieses ersetzen oder entfernen.",
   "Cannot move folder in its subfolder": "Cannot move folder in its subfolder",
+  "Cannot copy folder in its subfolder": "Cannot copy folder in its subfolder",
   "To this folder": "In diesen Ordner",
   "Tools": "Tools",
   "Type": "Typ",

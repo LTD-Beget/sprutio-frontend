@@ -25,6 +25,14 @@ Ext.define 'FM.action.Copy',
         title: t("Copy")
         msg: Ext.util.Format.format(t("Copy {0} items to {1}?"), paths.length, target_session.path)
         yes: () ->
+          file_paths = FM.helpers.GetAbsNames(session, records)
+          same_session = FM.helpers.IsSameSession(session, target_session)
+
+          for file_path in file_paths
+            if target_session.path.indexOf(file_path, 0) != -1 and same_session
+              FM.helpers.ShowError(t("Cannot copy folder in its subfolder"))
+              return
+
           FM.helpers.CheckOverwrite target_panel, records, (overwrite) ->
             FM.Logger.debug('Yes handler()', session, paths)
 
