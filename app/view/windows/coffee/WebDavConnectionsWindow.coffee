@@ -1,16 +1,16 @@
-Ext.define 'FM.view.windows.FtpConnectionsWindow',
+Ext.define 'FM.view.windows.WebDavConnectionsWindow',
   extend: 'Ext.ux.window.Window'
   requires: [
-    'FM.view.grids.ConnectionList'
+    'FM.view.grids.WebDavConnectionList'
   ]
-  alias: 'widget.ftp-connections-window'
-  title: t("External FTP")
-  cls: 'fm-ftp-connections-window'
+  alias: 'widget.webdav-connections-window'
+  title: t("External WebDav")
+  cls: 'fm-webdav-connections-window'
   animate: true
   constrain: true
   layout: 'fit'
   bodyPadding: '0 0 20 0'
-  width: 450
+  width: 550
   height: 300
   resizable:
     handles: 's n e w se'
@@ -22,9 +22,9 @@ Ext.define 'FM.view.windows.FtpConnectionsWindow',
   border: false
   items: [
     {
-      xtype: 'connection-list'
+      xtype: 'webdav-connection-list'
     }
   ]
   initComponent: () ->
-    FM.Logger.debug('FM.view.windows.FtpConnectionsWindow initComponent() called', arguments)
+    FM.Logger.debug('FM.view.windows.WebDavConnectionsWindow initComponent() called', arguments)
     @callParent(arguments)

@@ -1,4 +1,4 @@
-Ext.define 'FM.model.FtpConnection',
+Ext.define 'FM.model.WebDavConnection',
   extend: 'Ext.data.Model'
   fields: [
     {
@@ -16,8 +16,8 @@ Ext.define 'FM.model.FtpConnection',
     }
   ]
   initConneciton: (panel) ->
-    FM.Logger.debug('FtpConnection initConnection() called', arguments)
-    FM.Actions.OpenFtp.execute panel,
-      type: FM.Session.PUBLIC_FTP
+    FM.Logger.debug('WebDavConnection initConnection() called', arguments)
+    FM.Actions.OpenWebDav.execute panel,
+      type: FM.Session.WEBDAV
       path: '/'
       server_id: @get('id')

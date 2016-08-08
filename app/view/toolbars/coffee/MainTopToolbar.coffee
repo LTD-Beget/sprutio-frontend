@@ -277,11 +277,18 @@ Ext.define 'FM.view.toolbars.MainTopToolbar',
             FM.Actions.HomeFtp.execute(FM.Active)
         },
         {
-          text: FM.Actions.RemoteFtp.getMenuText()
-          name: FM.Actions.RemoteFtp.getIconCls()
-          iconCls: FM.Actions.RemoteFtp.getIconCls()
+          text: FM.Actions.RemoteConnections.getMenuText()
+          name: FM.Actions.RemoteConnections.getIconCls()
+          iconCls: FM.Actions.RemoteConnections.getIconCls()
           handler: () ->
-            FM.Actions.RemoteFtp.execute(FM.Active)
+            FM.Actions.RemoteConnections.execute(FM.Active)
+        },
+        {
+          text: FM.Actions.RemoteWebDav.getMenuText()
+          name: FM.Actions.RemoteWebDav.getIconCls()
+          iconCls: FM.Actions.RemoteWebDav.getIconCls()
+          handler: () ->
+            FM.Actions.RemoteWebDav.execute(FM.Active)
         },
         "-",
         {
@@ -296,6 +303,30 @@ Ext.define 'FM.view.toolbars.MainTopToolbar',
       ]
 
     @items.push "->"
+
+    @items.push
+      xtype: "button"
+      text: t("Language"),
+      menu:
+        xtype: 'menu'
+        items: [
+          {
+            text: t("Русский")
+            href: "/?language=ru"
+            iconCls: 'fm-icon-lang-ru'
+          },
+          {
+            text: t("English")
+            href: "/?language=en"
+            iconCls: 'fm-icon-lang-en'
+          },
+          {
+            text: t("Deutsch")
+            href: "/?language=de"
+            iconCls: 'fm-icon-lang-de'
+          },
+        ]
+
 
     @items.push FM.Actions.Help
     @items.push FM.Actions.Logout

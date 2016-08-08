@@ -33,13 +33,23 @@ Ext.define 'FM.view.toolbars.MainButtonsToolbar',
           },
           {
             xtype: 'button'
-            name: FM.Actions.RemoteFtp.getIconCls()
-            text: FM.Actions.RemoteFtp.getMenuText()
-            iconCls: FM.Actions.RemoteFtp.getIconCls()
+            name: FM.Actions.RemoteConnections.getIconCls()
+            text: FM.Actions.RemoteConnections.getMenuText()
+            iconCls: FM.Actions.RemoteConnections.getIconCls()
             scale: 'large'
             iconAlign: 'top'
             handler: () =>
-              FM.Actions.RemoteFtp.execute(FM.Active)
+              FM.Actions.RemoteConnections.execute(FM.Active)
+          },
+          {
+            xtype: 'button'
+            name: FM.Actions.RemoteWebDav.getIconCls()
+            text: FM.Actions.RemoteWebDav.getMenuText()
+            iconCls: FM.Actions.RemoteWebDav.getIconCls()
+            scale: 'large'
+            iconAlign: 'top'
+            handler: () =>
+              FM.Actions.RemoteWebDav.execute(FM.Active)
           },
           {
             xtype: 'button'

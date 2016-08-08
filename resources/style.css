@@ -290,6 +290,9 @@ body {
 .fm-action-remote {
   background-image: url('/fm/resources/images/actions/16/remote.png');
 }
+.fm-action-remote-webdav {
+  background-image: url('/fm/resources/images/actions/16/webdav.png');
+}
 .fm-action-local {
   background-image: url('/fm/resources/images/actions/16/local.png');
 }
@@ -318,6 +321,9 @@ body {
   background-image: url('/fm/resources/images/actions/16/extract-archive.png');
 }
 .fm-action-connect-ftp {
+  background-image: url('/fm/resources/images/actions/16/server_go.png');
+}
+.fm-action-connect-webdav {
   background-image: url('/fm/resources/images/actions/16/server_go.png');
 }
 .fm-action-backup-files {
@@ -349,6 +355,15 @@ body {
 }
 .fm-icon-remove {
   background-image: url('/fm/resources/images/actions/16/remove.png');
+}
+.fm-icon-lang-ru {
+  background-image: url('/static/ru-24.png');
+}
+.fm-icon-lang-en {
+  background-image: url('/static/en-24.png');
+}
+.fm-icon-lang-de {
+  background-image: url('/static/de-24.png');
 }
 .ux-mu-icon-action-ok {
   background-image: url('/fm/resources/images/actions/16/check.png');
@@ -1218,6 +1233,9 @@ div.share_box p {
 }
 #fm-main-buttons-toolbar .fm-action-remote {
   background-image: url('/fm/resources/images/actions/32/remote.png');
+}
+#fm-main-buttons-toolbar .fm-action-remote-webdav {
+  background-image: url('/fm/resources/images/actions/32/webdav.png');
 }
 #fm-main-buttons-toolbar .fm-action-local {
   background-image: url('/fm/resources/images/actions/32/local.png');

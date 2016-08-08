@@ -1,10 +1,10 @@
-Ext.define 'FM.action.OpenFtp',
+Ext.define 'FM.action.OpenWebDav',
   extend: 'FM.overrides.Action'
   config:
-    iconCls: "fm-action-open-ftp"
+    iconCls: "fm-action-open-webdav"
     text: t("Open")
     handler: (panel, session) ->
-      FM.Logger.info('Run Action FM.action.OpenFtp', panel, session)
+      FM.Logger.info('Run Action FM.action.OpenWebDav', panel, session)
 
       FM.helpers.SetLoading(panel.body, t("Loading..."))
       FM.backend.ajaxSend '/actions/main/init_session',
@@ -24,5 +24,5 @@ Ext.define 'FM.action.OpenFtp',
         failure: (response) ->
           FM.helpers.UnsetLoading(panel.body)
           FM.Logger.debug(response)
-          FM.helpers.ShowError(t("Unable to open ftp connection.<br/> Check ftp credentials and try again."))
+          FM.helpers.ShowError(t("Unable to open webdav connection.<br/> Check webdav credentials and try again."))
           FM.Logger.error(response)

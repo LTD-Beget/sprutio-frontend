@@ -317,11 +317,18 @@ Ext.define('FM.view.toolbars.MainTopToolbar', {
             return FM.Actions.HomeFtp.execute(FM.Active);
           }
         }, {
-          text: FM.Actions.RemoteFtp.getMenuText(),
-          name: FM.Actions.RemoteFtp.getIconCls(),
-          iconCls: FM.Actions.RemoteFtp.getIconCls(),
+          text: FM.Actions.RemoteConnections.getMenuText(),
+          name: FM.Actions.RemoteConnections.getIconCls(),
+          iconCls: FM.Actions.RemoteConnections.getIconCls(),
           handler: function() {
-            return FM.Actions.RemoteFtp.execute(FM.Active);
+            return FM.Actions.RemoteConnections.execute(FM.Active);
+          }
+        }, {
+          text: FM.Actions.RemoteWebDav.getMenuText(),
+          name: FM.Actions.RemoteWebDav.getIconCls(),
+          iconCls: FM.Actions.RemoteWebDav.getIconCls(),
+          handler: function() {
+            return FM.Actions.RemoteWebDav.execute(FM.Active);
           }
         }, "-", {
           text: FM.Actions.IPBlock.getMenuText(),
@@ -334,6 +341,28 @@ Ext.define('FM.view.toolbars.MainTopToolbar', {
       ]
     });
     this.items.push("->");
+    this.items.push({
+      xtype: "button",
+      text: t("Language"),
+      menu: {
+        xtype: 'menu',
+        items: [
+          {
+            text: t("Русский"),
+            href: "/?language=ru",
+            iconCls: 'fm-icon-lang-ru'
+          }, {
+            text: t("English"),
+            href: "/?language=en",
+            iconCls: 'fm-icon-lang-en'
+          }, {
+            text: t("Deutsch"),
+            href: "/?language=de",
+            iconCls: 'fm-icon-lang-de'
+          }
+        ]
+      }
+    });
     this.items.push(FM.Actions.Help);
     this.items.push(FM.Actions.Logout);
     return this.callParent(arguments);
