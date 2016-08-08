@@ -20,6 +20,7 @@ Ext.define 'FM.view.panels.TopPanel',
   updateButtonsState: (panel, files) ->
     home_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.HomeFtp.getIconCls() + "]", @items.get(0))[0]
     remote_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.RemoteConnections.getIconCls() + "]", @items.get(0))[0]
+    remote_webdav_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.RemoteWebDav.getIconCls() + "]", @items.get(0))[0]
     refresh_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.Refresh.getIconCls() + "]", @items.get(0))[0]
     mkdir_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.NewFolder.getIconCls() + "]", @items.get(0))[0]
     upload_button = Ext.ComponentQuery.query("button[name=" + FM.Actions.Upload.getIconCls() + "]", @items.get(0))[0]
@@ -43,6 +44,11 @@ Ext.define 'FM.view.panels.TopPanel',
       remote_button.setDisabled(false)
     else
       remote_button.setDisabled(true)
+
+    if FM.helpers.isAllowed(FM.Actions.RemoteWebDav, panel, files)
+      remote_webdav_button.setDisabled(false)
+    else
+      remote_webdav_button.setDisabled(true)
 
     if FM.helpers.isAllowed(FM.Actions.Refresh, panel, files)
       refresh_button.setDisabled(false)
@@ -89,6 +95,7 @@ Ext.define 'FM.view.panels.TopPanel',
 
     home_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.HomeFtp.getIconCls() + "]", toolbar)[0]
     remote_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.RemoteConnections.getIconCls() + "]", toolbar)[0]
+    remote_webdav_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.RemoteWebDav.getIconCls() + "]", toolbar)[0]
     refresh_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.Refresh.getIconCls() + "]", toolbar)[0]
     mkdir_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.NewFolder.getIconCls() + "]", toolbar)[0]
     new_file_button = Ext.ComponentQuery.query("menuitem[name=" + FM.Actions.NewFile.getIconCls() + "]", toolbar)[0]
@@ -137,6 +144,11 @@ Ext.define 'FM.view.panels.TopPanel',
       remote_button.setDisabled(false)
     else
       remote_button.setDisabled(true)
+
+    if FM.helpers.isAllowed(FM.Actions.RemoteWebDav, panel, files)
+      remote_webdav_button.setDisabled(false)
+    else
+      remote_webdav_button.setDisabled(true)
 
     if FM.helpers.isAllowed(FM.Actions.Refresh, panel, files)
       refresh_button.setDisabled(false)

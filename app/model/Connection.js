@@ -30,7 +30,7 @@ Ext.define('FM.model.Connection', {
     if (this.get('type') === 'ftp' || this.get('type') === '') {
       FM.Logger.debug('Connection initConnection() FTP called', arguments);
       return FM.Actions.OpenRemoteConnection.execute(panel, {
-        type: FM.Session.PUBLIC_FTP,
+        type: FM.Session.FTP,
         path: '/',
         server_id: this.get('id')
       });
