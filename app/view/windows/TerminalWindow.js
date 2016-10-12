@@ -10,22 +10,8 @@
     maximizable: true,
     border: false,
     width: 700,
-    height: 600,
+    height: 500,
     margin: 0,
-    items: [
-      {
-        id: "idTerm",
-        frame: false,
-        border: false,
-        xtype: "component",
-        autoEl: {
-          id: "idTerminal",
-          tag: "iframe",
-          src: "https://localhost:3000",
-          frameborder: 0
-        }
-      }
-    ],
     listeners: {
       beforeshow: {
         fn: function() {
@@ -40,20 +26,19 @@
       }
     },
     initComponent: function() {
-      FM.Logger.debug('FM.view.windows.Terminal initComponent() called', arguments);
-      return this.callParent(arguments);
-    },
-    setCredentials: function(host, user) {
-      var pattern;
-      pattern = function(arg) {
-        var host, user;
-        user = arg.user, host = arg.host;
-        return "https://localhost:3000/wetty/ssh/" + user + "/" + host;
-      };
-      return Ext.get('idTerm').dom.src = pattern({
-        user: user,
-        host: host
+      FM.Logger.log('FM.view.windows.Terminal initComponent() called', arguments);
+      this.items = [];
+      this.items.push({
+        frame: false,
+        border: false,
+        xtype: "component",
+        autoEl: {
+          tag: "iframe",
+          src: this.address,
+          frameborder: 0
+        }
       });
+      return this.callParent(arguments);
     },
     exit: function() {
       FM.Logger.debug('FM.view.windows.TerminalWindow exit() called', arguments);

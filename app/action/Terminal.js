@@ -23,16 +23,26 @@
           },
           success: (function(_this) {
             return function(response) {
-              var account, win;
+              var account, addressString, host, pattern, user, win;
               account = Ext.util.JSON.decode(response.responseText).data.account;
-              FM.Logger.info('account=', account);
+              pattern = function(arg) {
+                var host, user;
+                user = arg.user, host = arg.host;
+                return "https://localhost:3000/wetty/ssh/" + user + "/" + host;
+              };
+              user = account.login;
+              host = account.server;
+              addressString = pattern({
+                user: user,
+                host: host
+              });
               wait.close();
               win = Ext.create("FM.view.windows.TerminalWindow", {
                 taskBar: bottom_toolbar,
+                address: addressString,
                 title: Ext.util.Format.format(t("Terminal: {0}"), account.server)
               });
               win.show();
-              win.setCredentials(account.server, account.login);
               return FM.Logger.info('Terminal window done', win);
             };
           })(this),

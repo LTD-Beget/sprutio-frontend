@@ -8,20 +8,8 @@ Ext.define 'FM.view.windows.TerminalWindow',
   maximizable: true
   border: false
   width: 700
-  height: 600
+  height: 500
   margin: 0
-  items: [{
-    id: "idTerm"
-    frame: false,
-    border: false,
-    xtype: "component",
-    autoEl: {
-      id: "idTerminal",
-      tag: "iframe",
-      src: "https://localhost:3000",
-      frameborder: 0
-    }
-  }]
   listeners:
     beforeshow:
       fn: () ->
@@ -33,13 +21,19 @@ Ext.define 'FM.view.windows.TerminalWindow',
         return true
 
   initComponent: () ->
-    FM.Logger.debug('FM.view.windows.Terminal initComponent() called', arguments)
+    FM.Logger.log('FM.view.windows.Terminal initComponent() called', arguments)
+    @items = []
+
+    @items.push
+      frame: false,
+      border: false,
+      xtype: "component",
+      autoEl: {
+        tag: "iframe",
+        src: @address,
+        frameborder: 0
+      }
     @callParent(arguments)
-
-  setCredentials: (host, user) ->
-    pattern = ({user, host}) -> "https://localhost:3000/wetty/ssh/#{user}/#{host}"
-    Ext.get('idTerm').dom.src = pattern {user, host};
-
 
   exit: () ->
     FM.Logger.debug('FM.view.windows.TerminalWindow exit() called', arguments)

@@ -25,16 +25,18 @@ Ext.define 'FM.action.Terminal',
           session: session
         success: (response) =>
           account = Ext.util.JSON.decode(response.responseText).data.account
-          FM.Logger.info('account=', account)
+          pattern = ({user, host}) -> "https://localhost:3000/wetty/ssh/#{user}/#{host}"
+          user = account.login
+          host = account.server
+          addressString = pattern {user, host}
           wait.close()
 
           win = Ext.create "FM.view.windows.TerminalWindow",
             taskBar: bottom_toolbar
+            address: addressString
             title: Ext.util.Format.format(t("Terminal: {0}"), account.server)
 
-          # win.setCredentials(account.server, account.login)
           win.show()
-          win.setCredentials(account.server, account.login)
           FM.Logger.info('Terminal window done', win)
 
         failure: (response) =>
