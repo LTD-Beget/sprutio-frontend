@@ -4,6 +4,8 @@
     extend: 'FM.overrides.Action',
     requires: ['FM.view.windows.TerminalWindow', 'FM.view.windows.ProgressWindow'],
     config: {
+      scale: "large",
+      iconAlign: "top",
       iconCls: "fm-action-terminal",
       text: t("Terminal"),
       buttonText: t("Terminal [ Ctrl + 9 ]"),

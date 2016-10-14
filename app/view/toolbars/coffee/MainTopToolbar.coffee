@@ -290,6 +290,13 @@ Ext.define 'FM.view.toolbars.MainTopToolbar',
           handler: () ->
             FM.Actions.RemoteWebDav.execute(FM.Active)
         },
+        {
+          text: FM.Actions.Terminal.getMenuText()
+          name: FM.Actions.Terminal.getIconCls()
+          iconCls: FM.Actions.Terminal.getIconCls()
+          handler: ()->
+            FM.Actions.Terminal.execute(FM.Active)
+        }
         "-",
         {
           text: FM.Actions.IPBlock.getMenuText()

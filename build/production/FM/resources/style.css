@@ -1240,6 +1240,9 @@ div.share_box p {
 #fm-main-buttons-toolbar .fm-action-remote-webdav {
   background-image: url('/fm/resources/images/actions/32/webdav.png');
 }
+#fm-main-buttons-toolbar .fm-action-terminal {
+  background-image: url('/fm/resources/images/actions/32/terminal.png');
+}
 #fm-main-buttons-toolbar .fm-action-local {
   background-image: url('/fm/resources/images/actions/32/local.png');
 }

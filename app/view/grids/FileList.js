@@ -1063,6 +1063,15 @@
                 return e.stopEvent();
               }
             })
+          }, {
+            key: [Ext.event.Event.NUM_NINE, Ext.event.Event.NINE],
+            ctrl: true,
+            fn: FM.HotKeys.HotKeyDecorator(function(key, e) {
+              if (FM.helpers.isAllowed(FM.Actions.Terminal, panel, [])) {
+                FM.Actions.Terminal.execute(panel);
+              }
+              return e.stopEvent();
+            })
           }
         ]
       });

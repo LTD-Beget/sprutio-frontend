@@ -53,6 +53,16 @@ Ext.define 'FM.view.toolbars.MainButtonsToolbar',
           },
           {
             xtype: 'button'
+            name: FM.Actions.Terminal.getIconCls()
+            text: FM.Actions.Terminal.getMenuText()
+            iconCls: FM.Actions.Terminal.getIconCls()
+            scale: 'large'
+            iconAlign: 'top'
+            handler: () =>
+              FM.Actions.Terminal.execute(FM.Active)
+          },
+          {
+            xtype: 'button'
             name: FM.Actions.Refresh.getIconCls()
             text: FM.Actions.Refresh.getMenuText()
             iconCls: FM.Actions.Refresh.getIconCls()

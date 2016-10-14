@@ -72,6 +72,12 @@ Ext.define 'FM.view.panels.BottomPanel',
             return
           else
             FM.Actions.Remove.execute(FM.Active, FM.helpers.GetAbsNames(FM.Active.session, records))
+      
+      Ext.create "Ext.button.Button",
+        id: "hot-button-terminal"
+        text: FM.Actions.Terminal.getText() + ' [Ctrl + 9]'
+        handler: () ->
+          FM.Actions.Terminal.execute(FM.Active)
     ]
 
     this.callParent(arguments)
@@ -85,6 +91,7 @@ Ext.define 'FM.view.panels.BottomPanel',
     rename_button = Ext.ComponentQuery.query("#hot-button-rename", @)[0]
     mkdir_button = Ext.ComponentQuery.query("#hot-button-mkdir", @)[0]
     remove_button = Ext.ComponentQuery.query("#hot-button-remove", @)[0]
+    terminal_button = Ext.ComponentQuery.query("#hot-button-terminal", @)[0]
 
     if FM.helpers.isAllowed(FM.Actions.View, panel, files)
       view_button.setDisabled(false)
@@ -120,3 +127,8 @@ Ext.define 'FM.view.panels.BottomPanel',
       remove_button.setDisabled(false)
     else
       remove_button.setDisabled(true)
+
+    if FM.helpers.isAllowed(FM.Actions.Terminal, panel, files)
+      terminal_button.setDisabled(false)
+    else
+      terminal_button.setDisabled(true)

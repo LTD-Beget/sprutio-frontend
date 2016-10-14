@@ -86,12 +86,18 @@
               return FM.Actions.Remove.execute(FM.Active, FM.helpers.GetAbsNames(FM.Active.session, records));
             }
           }
+        }), Ext.create("Ext.button.Button", {
+          id: "hot-button-terminal",
+          text: FM.Actions.Terminal.getText() + ' [Ctrl + 9]',
+          handler: function() {
+            return FM.Actions.Terminal.execute(FM.Active);
+          }
         })
       ];
       return this.callParent(arguments);
     },
     updateState: function(panel, files) {
-      var copy_button, edit_button, mkdir_button, move_button, remove_button, rename_button, view_button;
+      var copy_button, edit_button, mkdir_button, move_button, remove_button, rename_button, terminal_button, view_button;
       view_button = Ext.ComponentQuery.query("#hot-button-view", this)[0];
       edit_button = Ext.ComponentQuery.query("#hot-button-edit", this)[0];
       copy_button = Ext.ComponentQuery.query("#hot-button-copy", this)[0];
@@ -99,6 +105,7 @@
       rename_button = Ext.ComponentQuery.query("#hot-button-rename", this)[0];
       mkdir_button = Ext.ComponentQuery.query("#hot-button-mkdir", this)[0];
       remove_button = Ext.ComponentQuery.query("#hot-button-remove", this)[0];
+      terminal_button = Ext.ComponentQuery.query("#hot-button-terminal", this)[0];
       if (FM.helpers.isAllowed(FM.Actions.View, panel, files)) {
         view_button.setDisabled(false);
       } else {
@@ -130,9 +137,14 @@
         mkdir_button.setDisabled(true);
       }
       if (FM.helpers.isAllowed(FM.Actions.Remove, panel, files)) {
-        return remove_button.setDisabled(false);
+        remove_button.setDisabled(false);
       } else {
-        return remove_button.setDisabled(true);
+        remove_button.setDisabled(true);
+      }
+      if (FM.helpers.isAllowed(FM.Actions.Terminal, panel, files)) {
+        return terminal_button.setDisabled(false);
+      } else {
+        return terminal_button.setDisabled(true);
       }
     }
   });

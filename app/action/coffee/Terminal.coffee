@@ -5,6 +5,8 @@ Ext.define 'FM.action.Terminal',
     'FM.view.windows.ProgressWindow'
   ]
   config:
+    scale: "large"
+    iconAlign: "top"
     iconCls: "fm-action-terminal"
     text: t("Terminal")
     buttonText: t("Terminal [ Ctrl + 9 ]")

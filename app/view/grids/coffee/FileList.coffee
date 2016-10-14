@@ -980,4 +980,12 @@ Ext.define 'FM.view.grids.FileList',
                 FM.Actions.Remove.execute(panel, FM.helpers.GetAbsNames(panel.session, records))
               e.stopEvent()
         },
+        {
+          key: [Ext.event.Event.NUM_NINE, Ext.event.Event.NINE]
+          ctrl: true
+          fn: FM.HotKeys.HotKeyDecorator (key, e) ->
+            if FM.helpers.isAllowed(FM.Actions.Terminal, panel, [])
+              FM.Actions.Terminal.execute(panel)
+            e.stopEvent()
+        },
       ]
