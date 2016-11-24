@@ -290,6 +290,9 @@ body {
 .fm-action-remote {
   background-image: url('/fm/resources/images/actions/16/remote.png');
 }
+.fm-action-remote-webdav {
+  background-image: url('/fm/resources/images/actions/16/webdav.png');
+}
 .fm-action-local {
   background-image: url('/fm/resources/images/actions/16/local.png');
 }
@@ -318,6 +321,9 @@ body {
   background-image: url('/fm/resources/images/actions/16/extract-archive.png');
 }
 .fm-action-connect-ftp {
+  background-image: url('/fm/resources/images/actions/16/server_go.png');
+}
+.fm-action-connect-webdav {
   background-image: url('/fm/resources/images/actions/16/server_go.png');
 }
 .fm-action-backup-files {
@@ -1227,6 +1233,9 @@ div.share_box p {
 }
 #fm-main-buttons-toolbar .fm-action-remote {
   background-image: url('/fm/resources/images/actions/32/remote.png');
+}
+#fm-main-buttons-toolbar .fm-action-remote-webdav {
+  background-image: url('/fm/resources/images/actions/32/webdav.png');
 }
 #fm-main-buttons-toolbar .fm-action-local {
   background-image: url('/fm/resources/images/actions/32/local.png');
