@@ -224,6 +224,7 @@ Ext.define 'FM.Application',
     allowed_no_files[FM.Actions.NewFile.self.getName()] = true
     allowed_no_files[FM.Actions.NewFolder.self.getName()] = true
     allowed_no_files[FM.Actions.IPBlock.self.getName()] = true
+    allowed_no_files[FM.Actions.Terminal.self.getName()] = true
 
     # name of the action class
     action_name = action.self.getName()

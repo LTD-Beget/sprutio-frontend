@@ -7,8 +7,8 @@
       "version": "1.0.0"
     },
     "cmd": {
-      "current": "6.0.1.76",
-      "version": "6.1.2.15"
+      "current": "6.1.3.42",
+      "version": "6.1.3.42"
     },
     "ext": {
       "creator": "Sencha",
@@ -87,8 +87,8 @@
   "theme": "beget-custom-theme",
   "id": "4f677268-5a57-4a07-a0a1-a3f82ba58434",
   "profile": "",
-  "hash": "1e2570f7d9780f776ef68a348c9ac7450e7e4738",
+  "hash": "36d8e8d9251ac302e4d547a4b8048b12ffe7e3d5",
   "resources": {
-    "path": "FM/resources"
+    "path":"FM/resources"
   }
 }

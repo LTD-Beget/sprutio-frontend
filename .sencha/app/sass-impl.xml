@@ -202,13 +202,24 @@
                                     toFile="${app.out.css}"/>
                         </then>
                         <else>
-                            <x-sass-build input="${app.out.scss}"
-                                          output="${app.out.css}"
-                                          refId="app.web.server"
-                                          split="${build.css.selector.limit}"
-                                          compress="${build.css.compress}"
-                                          updateSplitFiles="true"
-                                          compilerRefId="${compiler.ref.id}"/>
+                            <x-fashion-live-update input="${app.out.scss}"
+                                                   output="${app.out.css}"
+                                                   refId="app.web.server"
+                                                   split="${build.css.selector.limit}"
+                                                   compress="${build.css.compress}"
+                                                   compilerRefId="${compiler.ref.id}"/>
+
+                            <x-sencha-command>
+                                fashion
+                                    -compress=${build.css.compress}
+                                    -split=${build.css.selector.limit}
+                                    -saveFile=${app.dir}/${app.sass.save}
+                                    ${app.out.scss}
+                                    ${app.out.css}
+                            </x-sencha-command>
+
+                            <x-update-css-array input="${app.out.css}"
+                                                compilerRefId="${compiler.ref.id}"/>
                         </else>
                     </if>
                 </then>
@@ -296,14 +307,14 @@
     over the directory containing the manually maintined scss files
     -->
     <target name="-compass-compile-sass-dir">
-        <!--<x-run-if-true value="${enable.touch.themes}">-->
-            <!--<x-compass-compile-->
-                    <!--rubyPath="${build.ruby.path}"-->
-                    <!--trace="${compass.compile.trace}"-->
-                    <!--boring="${compass.compile.boring}"-->
-                    <!--force="${compass.compile.force}"-->
-                    <!--dir="${compass.sass.dir}"/>-->
-        <!--</x-run-if-true>-->
+        <x-run-if-true value="${enable.touch.themes}">
+            <x-compass-compile
+                    rubyPath="${build.ruby.path}"
+                    trace="${compass.compile.trace}"
+                    boring="${compass.compile.boring}"
+                    force="${compass.compile.force}"
+                    dir="${compass.sass.dir}"/>
+        </x-run-if-true>
     </target>
 
     <!--

@@ -53,6 +53,13 @@ Ext.define 'FM.view.panels.FileListPanel',
         handler: () =>
           FM.Actions.NewFile.execute(@)
 
+    if FM.helpers.isAllowed(FM.Actions.Terminal, @, [])
+      items.push
+        text: FM.Actions.Terminal.getMenuText()
+        iconCls: FM.Actions.Terminal.getIconCls()
+        handler: () =>
+          FM.Actions.Terminal.execute(@)
+
     if FM.helpers.isAllowed(FM.Actions.NewFolder, @, [])
       items.push
         text: FM.Actions.NewFolder.getMenuText()

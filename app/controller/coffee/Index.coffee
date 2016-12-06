@@ -58,6 +58,7 @@ Ext.define 'FM.controller.Index',
 
     'FM.action.Help'
     'FM.action.Logout'
+    'FM.action.Terminal'
 
     'FM.store.Connections'
     'FM.store.WebDavConnections'
@@ -150,6 +151,7 @@ Ext.define 'FM.controller.Index',
     FM.Actions.Rename = Ext.create "FM.action.Rename"
     FM.Actions.NewFolder = Ext.create "FM.action.NewFolder"
     FM.Actions.NewFile = Ext.create "FM.action.NewFile"
+    FM.Actions.Terminal = Ext.create "FM.action.Terminal"
     FM.Actions.Remove = Ext.create "FM.action.Remove"
 
     FM.Actions.IPBlock = Ext.create "FM.action.IPBlock"
