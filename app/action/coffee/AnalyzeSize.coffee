@@ -35,45 +35,38 @@ Ext.define 'FM.action.AnalyzeSize',
       if status.status? and (status.status == FM.Status.STATUS_RUNNING or status.status == FM.Status.STATUS_WAIT)
         setTimeout () =>
           FM.backend.ajaxSend '/actions/main/check_status',
-          params:
-            session: session
-            status: status
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
-            @process(chart_window, session, status)
+            params:
+              session: session
+              status: status
+            success: (response) =>
+              status = Ext.util.JSON.decode(response.responseText).data
+              @process(chart_window, session, status)
 
-          failure: (response) =>
-            FM.helpers.UnsetLoading(files_list.body)
-            FM.helpers.UnsetLoading(files_chart)
-            FM.helpers.ShowError(t("Error during check operation status.<br/>Please contact Support."))
-            FM.Logger.error(response)
+            failure: (response) =>
+              FM.helpers.UnsetLoading(files_list.body)
+              FM.helpers.UnsetLoading(files_chart)
+              FM.helpers.ShowError(t("Error during check operation status.<br/>Please contact Support."))
+              FM.Logger.error(response)
         ,
           FM.Time.REQUEST_DELAY
       else
         FM.getApplication().fireEvent(FM.Events.file.analyzeSize, status, session, chart_window)
     else
-      if session.type == FM.Session.LOCAL_APPLET
-        try
-          FM.Active.applet.analyze_size(chart_window, session)
-        catch
-          FM.Logger.error("Applet error")
-          FM.helpers.ShowError(t("Error during operation. Please contact Support."))
-      else
-        FM.helpers.SetLoading(files_list.body, t("Retrieve folders and files size..."))
-        FM.helpers.SetLoading(files_chart, t("Retrieve folders and files size..."))
+      FM.helpers.SetLoading(files_list.body, t("Retrieve folders and files size..."))
+      FM.helpers.SetLoading(files_chart, t("Retrieve folders and files size..."))
 
-        FM.backend.ajaxSend '/actions/files/analyze_size',
-          params:
-            session: session
-            path: chart_window.getPath()
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
-            chart_window.setOperationStatus(status)
-            @process(chart_window, session, status)
+      FM.backend.ajaxSend '/actions/files/analyze_size',
+        params:
+          session: session
+          path: chart_window.getPath()
+        success: (response) =>
+          status = Ext.util.JSON.decode(response.responseText).data
+          chart_window.setOperationStatus(status)
+          @process(chart_window, session, status)
 
-          failure: (response) =>
-            FM.helpers.UnsetLoading(files_list.body)
-            FM.helpers.UnsetLoading(files_chart)
-            FM.Logger.debug(response)
-            FM.helpers.ShowError(t("Error during size analysis operation start.<br/>Please contact Support."))
-            FM.Logger.error(response)
+        failure: (response) =>
+          FM.helpers.UnsetLoading(files_list.body)
+          FM.helpers.UnsetLoading(files_chart)
+          FM.Logger.debug(response)
+          FM.helpers.ShowError(t("Error during size analysis operation start.<br/>Please contact Support."))
+          FM.Logger.error(response)

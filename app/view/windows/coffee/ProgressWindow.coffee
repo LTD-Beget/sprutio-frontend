@@ -9,9 +9,9 @@ Ext.define 'FM.view.windows.ProgressWindow',
   resizable: false
   title: t("Process")
   waitConfig:
-    interval: 200
+    duration: 2000
     animate: true
-    text: ''
+    text: t("Initiate an operation...")
   cancelable: false
   cancelled: false
   session: null
@@ -26,8 +26,6 @@ Ext.define 'FM.view.windows.ProgressWindow',
       width: 300
       height: 18
       border: 1
-      animate: @waitConfig.animate
-      interval: @waitConfig.interval
       text: @waitConfig.text
       style:
         borderStyle: 'solid'
@@ -82,6 +80,12 @@ Ext.define 'FM.view.windows.ProgressWindow',
 
   setSession: (session) ->
     @session = session
+
+  hide: () ->
+    # Иначе окно закрывается до того, как пользователь увидит, что процедура завершилась успешно
+    setTimeout () =>
+      FM.view.windows.ProgressWindow.superclass.hide.call @
+    , 500
 
   getSession: () ->
     return @session

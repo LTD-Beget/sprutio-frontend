@@ -46,9 +46,6 @@ Ext.define 'FM.controller.MainHandler',
     FM.Logger.log('Event saveSession run in MainHandler! data = ', arguments)
 
     for panel in panels
-      if panel.session.type == FM.Session.LOCAL_APPLET
-        return
-
       FM.backend.ajaxSend '/actions/main/save_session',
         params:
           session: panel.session
@@ -216,11 +213,6 @@ Ext.define 'FM.controller.MainHandler',
         button.setConfig
           text: FM.Actions.RemoteWebDav.getMenuText()
           iconCls: FM.Actions.RemoteWebDav.getIconCls()
-
-      if panel.session.type == FM.Session.LOCAL_APPLET
-        button.setConfig
-          text: FM.Actions.Local.getMenuText()
-          iconCls: FM.Actions.Local.getIconCls()
 
     # loading extra data from home
     @fireEvent(FM.Events.home.homeInitCallback, panels)

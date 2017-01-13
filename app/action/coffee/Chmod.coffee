@@ -19,7 +19,6 @@ Ext.define 'FM.action.Chmod',
       win = Ext.create "FM.view.windows.ChmodFilesWindow",
         taskBar: bottom_toolbar
         chmod: (button, chmod_window, e, params) =>
-
           wait = Ext.create 'FM.view.windows.ProgressWindow',
             cancelable: true
             msg: t("Applying attributes, please wait...")
@@ -66,28 +65,21 @@ Ext.define 'FM.action.Chmod',
       else
         FM.getApplication().fireEvent(FM.Events.file.chmodFiles, status, session, progress_window, params)
     else
-      if session.type == FM.Session.LOCAL_APPLET
-        try
-          FM.Active.applet.chmod(progress_window, session, params)
-        catch
-          FM.Logger.error("Applet error")
-          FM.helpers.ShowError(t("Error during operation. Please contact Support."))
-      else
-        FM.backend.ajaxSend '/actions/files/chmod',
-          params:
-            session: session
-            params: params
-          success: (response) =>
-            status = Ext.util.JSON.decode(response.responseText).data
-            progress_window.setOperationStatus(status)
-            progress_window.show()
-            @process(progress_window, session, params, status)
+      FM.backend.ajaxSend '/actions/files/chmod',
+        params:
+          session: session
+          params: params
+        success: (response) =>
+          status = Ext.util.JSON.decode(response.responseText).data
+          progress_window.setOperationStatus(status)
+          progress_window.show()
+          @process(progress_window, session, params, status)
 
-          failure: (response) =>
-            FM.Logger.debug(response)
+        failure: (response) =>
+          FM.Logger.debug(response)
 
-            FM.helpers.ShowError(t("Error during chmod files operation start. Please contact Support."))
-            FM.Logger.error(response)
+          FM.helpers.ShowError(t("Error during chmod files operation start. Please contact Support."))
+          FM.Logger.error(response)
 
   cancel: (progress_window, session, status) ->
     FM.backend.ajaxSend '/actions/main/cancel_operation',

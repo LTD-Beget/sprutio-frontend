@@ -17,10 +17,10 @@ Ext.define 'FM.controller.SearchHandler',
   findFiles: (status, session, search_window, files_list) ->
     FM.Logger.log('Event findFiles run in SearchHandler! data = ', arguments)
 
-    if status.status? and (status.status == FM.Status.STATUS_SUCCESS or status.status == FM.Status.STATUS_ABORT)
-      search_window.cancel_btn.setVisible(false)
-      search_window.search_btn.setVisible(true)
+    search_window.cancel_btn.setVisible(false)
+    search_window.search_btn.setVisible(true)
 
+    if status.status? and (status.status == FM.Status.STATUS_SUCCESS or status.status == FM.Status.STATUS_ABORT)
       if status.status == FM.Status.STATUS_ABORT
         FM.Logger.info('findFiles Operation Aborted', status)
       else
@@ -34,15 +34,11 @@ Ext.define 'FM.controller.SearchHandler',
       FM.helpers.UnsetLoading(files_list)
 
     else if status.status? and status.status == FM.Status.STATUS_ERROR
-      search_window.cancel_btn.setVisible(false)
-      search_window.search_btn.setVisible(true)
       FM.helpers.UnsetLoading(files_list)
       FM.Logger.info('Operation error', status)
       FM.helpers.ShowError(t("Error during operation. Please contact Support."))
       return
     else
-      search_window.cancel_btn.setVisible(false)
-      search_window.search_btn.setVisible(true)
       FM.helpers.UnsetLoading(files_list)
       FM.helpers.ShowError(t("Unknown operation status. Please contact Support."))
       return
@@ -50,10 +46,10 @@ Ext.define 'FM.controller.SearchHandler',
   findText: (status, session, search_window, files_list) ->
     FM.Logger.debug('Event findText run in SearchHandler! data = ', arguments)
 
-    if status.status? and (status.status == FM.Status.STATUS_SUCCESS or status.status == FM.Status.STATUS_ABORT)
-      search_window.cancel_btn.setVisible(false)
-      search_window.search_btn.setVisible(true)
+    search_window.cancel_btn.setVisible(false)
+    search_window.search_btn.setVisible(true)
 
+    if status.status? and (status.status == FM.Status.STATUS_SUCCESS or status.status == FM.Status.STATUS_ABORT)
       if status.status == FM.Status.STATUS_ABORT
         FM.Logger.info('findText Operation Aborted', status)
       else
@@ -67,8 +63,6 @@ Ext.define 'FM.controller.SearchHandler',
       FM.helpers.UnsetLoading(files_list)
 
     else if status.status? and status.status == FM.Status.STATUS_ERROR
-      search_window.cancel_btn.setVisible(false)
-      search_window.search_btn.setVisible(true)
       FM.helpers.UnsetLoading(files_list)
       error = t("Error during operation. Please contact Support.")
       if status.data? and status.data.message?
@@ -77,8 +71,6 @@ Ext.define 'FM.controller.SearchHandler',
       FM.helpers.ShowError(error)
       return
     else
-      search_window.cancel_btn.setVisible(false)
-      search_window.search_btn.setVisible(true)
       FM.helpers.UnsetLoading(files_list)
       FM.helpers.ShowError(t("Unknown operation status. Please contact Support."))
       return

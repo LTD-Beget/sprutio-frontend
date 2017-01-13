@@ -89,10 +89,11 @@ Ext.define 'FM.controller.HomeHandler',
                     text: connection.user + "@" + connection.host
                     iconCls: 'fm-action-connect-ftp'
                     handler: () =>
+                      server_id = parseInt(connection.id.replace(/(sf|f)tp/, ''))
                       FM.Actions.OpenRemoteConnection.execute panel,
                         type: FM.Session.SFTP
                         path: '.'
-                        server_id: connection.id
+                        server_id: server_id
                   }
 
                   connection_menu.push(connection_menu_element)
@@ -104,10 +105,11 @@ Ext.define 'FM.controller.HomeHandler',
                     text: connection.user + "@" + connection.host
                     iconCls: 'fm-action-connect-ftp'
                     handler: () =>
+                      server_id = parseInt(connection.id.replace(/(sf|f)tp/, ''))
                       FM.Actions.OpenRemoteConnection.execute panel,
                         type: FM.Session.FTP
                         path: '/'
-                        server_id: connection.id
+                        server_id: server_id
                   }
 
                   connection_menu.push(connection_menu_element)
@@ -162,6 +164,8 @@ Ext.define 'FM.controller.HomeHandler',
 
   processConnections: (connections) ->
     FM.Logger.log('processConnections() called arguments =', arguments)
+    for v, k in connections
+      connections[k]['id'] = v['type'] + v['id']
 
     FM.Stores.Conenctions.loadData(connections)
 

@@ -58,31 +58,27 @@ Ext.define 'FM.view.windows.ViewerWindow',
   changeEncoding: (encoding) ->
     FM.Logger.debug('FM.view.windows.ViewerWindow changeEncoding() called', arguments)
 
-    @fileEncoding = encoding
-    @updateToolbar()
-    @updateSettings()
+    FM.helpers.SetLoading(@body, t("Applying settings..."))
+    FM.backend.ajaxSend '/actions/files/read',
+      params:
+        session: @getSession()
+        path: FM.helpers.GetAbsName(@getSession(), @fileRecord)
+        encoding: encoding
+      success: (response) =>
+        response_data = Ext.util.JSON.decode(response.responseText).data
+        FM.helpers.UnsetLoading(@body)
+        @fileContent = response_data.content
+        @editor.setValue(@fileContent)
+        @fileEncoding = encoding
+        @updateToolbar()
+        @updateSettings()
 
-#    FM.helpers.SetLoading(@body, t("Applying settings..."))
-#    FM.backend.ajaxSend '/actions/files/read',
-#      params:
-#        session: @getSession()
-#        path: FM.helpers.GetAbsName(@getSession(), @fileRecord)
-#        encoding: encoding
-#      success: (response) =>
-#        response_data = Ext.util.JSON.decode(response.responseText).data
-#        FM.helpers.UnsetLoading(@body)
-#        @fileContent = response_data.content
-#        @editor.setValue(@fileContent)
-#        @fileEncoding = encoding
-#        @updateToolbar()
-#        @updateSettings()
-#
-#      failure: (response) =>
-#        FM.helpers.UnsetLoading(@body)
-#        json_response = Ext.util.JSON.decode(response.responseText)
-#        error = FM.helpers.ParseErrorMessage(json_response.message, t("Error during reading file.<br/> Please contact Support."))
-#        FM.helpers.ShowError(error)
-#        FM.Logger.error(response)
+      failure: (response) =>
+        FM.helpers.UnsetLoading(@body)
+        json_response = Ext.util.JSON.decode(response.responseText)
+        error = FM.helpers.ParseErrorMessage(json_response.message, t("Error during reading file.<br/> Please contact Support."))
+        FM.helpers.ShowError(error)
+        FM.Logger.error(response)
 
   initEditor: (ace_editor) ->
     FM.Logger.debug('FM.view.windows.ViewerWindow initEditor() called', arguments)
@@ -125,6 +121,16 @@ Ext.define 'FM.view.windows.ViewerWindow',
 
     syntax_menu.items.each (item) ->
       if item.text != @viewerMode
+        item.setChecked(false)
+      else
+        item.setChecked(true)
+    ,
+      @
+
+    encoding_menu = Ext.ComponentQuery.query('button[cls=button-menu-encoding]', @)[0].getMenu()
+
+    encoding_menu.items.each (item) ->
+      if item.text != @fileEncoding
         item.setChecked(false)
       else
         item.setChecked(true)

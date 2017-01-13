@@ -9,7 +9,6 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
   defaults:
     margin: 0
   initComponent: () ->
-
     FM.Logger.log('FM.view.toolbars.ConnectionListTopToolbar')
 
     @items = []
@@ -24,12 +23,16 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
         modified = @ownerCt.getStore().getModifiedRecords()
 
         for connection in modified
-          if connection.get('id') > 0
+          FM.Logger.debug("Modified connection id: " + connection.get('id'))
+
+          id = parseInt connection.get('id').replace(/(sf|f)tp/, "")
+
+          if id > 0
             if connection.get('type') == 'sftp'
               FM.backend.ajaxSend '/actions/sftp/update',
                 params:
                   params:
-                    id: connection.get('id')
+                    id: id
                     host: connection.get('host')
                     port: connection.get('port')
                     user: connection.get('user')
@@ -40,6 +43,9 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
 
                   for key of response_data
                     connection.set(key, response_data[key])
+
+                  if response_data['id']
+                    connection.set('id', 'sftp' + response_data['id'])
                   connection.commit()
 
                 failure: (response) =>
@@ -50,7 +56,7 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
               FM.backend.ajaxSend '/actions/ftp/update',
                 params:
                   params:
-                    id: connection.get('id')
+                    id: id
                     host: connection.get('host')
                     port: connection.get('port')
                     user: connection.get('user')
@@ -61,6 +67,9 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
 
                   for key of response_data
                     connection.set(key, response_data[key])
+
+                  if response_data['id']
+                    connection.set('id', 'ftp' + response_data['id'])
                   connection.commit()
 
                 failure: (response) =>
@@ -82,6 +91,9 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
 
                   for key of response_data
                     connection.set(key, response_data[key])
+
+                  if response_data['id']
+                    connection.set('id', 'sftp' + response_data['id'])
                   connection.commit()
 
                 failure: (response) =>
@@ -102,6 +114,9 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
 
                   for key of response_data
                     connection.set(key, response_data[key])
+
+                  if response_data['id']
+                    connection.set('id', 'ftp' + response_data['id'])
                   connection.commit()
 
                 failure: (response) =>
@@ -154,6 +169,7 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
           user: "user"
           decryptedPassword: "password"
           type: "ftp"
+          id: "zzzz-" + @ownerCt.getStore().count() # this will set record last in list
 
     @items.push
       text: t("Remove connection")
@@ -168,7 +184,6 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
           msg: t("Do you really want to remove this conneciton?")
           modal: true
           yes: () =>
-
             grid = @ownerCt
             grid.getPlugin().cancelEdit()
 
@@ -178,26 +193,36 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
               return false
 
             connection = row[0]
-            grid.getStore().remove(connection)
 
-            if connection.get('type') == 'sftp'
-              FM.backend.ajaxSend '/actions/sftp/remove',
-                params:
+            if connection.get('id').toString().indexOf('FM.model.Connection') == -1
+              id = parseInt connection.get('id').replace(/(sf|f)tp/, "")
+
+              if not id
+                grid.getStore().remove(connection)
+                return
+
+              if connection.get('type') == 'sftp'
+                FM.backend.ajaxSend '/actions/sftp/remove',
                   params:
-                    id: connection.get('id')
-                failure: (response) =>
-                  FM.Logger.debug(response)
-                  FM.helpers.ShowError(t("Error during sftp connection removal.<br/> Please contact Support."))
-                  FM.Logger.error(response)
-            if connection.get('type') == 'ftp'
-              FM.backend.ajaxSend '/actions/ftp/remove',
-                params:
+                    params:
+                      id: id
+                  success: () ->
+                    grid.getStore().remove(connection)
+                  failure: (response) ->
+                    FM.Logger.debug(response)
+                    FM.helpers.ShowError(t("Error during sftp connection removal.<br/> Please contact Support."))
+                    FM.Logger.error(response)
+              if connection.get('type') == 'ftp'
+                FM.backend.ajaxSend '/actions/ftp/remove',
                   params:
-                    id: connection.get('id')
-                failure: (response) =>
-                  FM.Logger.debug(response)
-                  FM.helpers.ShowError(t("Error during ftp connection removal.<br/> Please contact Support."))
-                  FM.Logger.error(response)
+                    params:
+                      id: id
+                  success: () ->
+                    grid.getStore().remove(connection)
+                  failure: (response) ->
+                    FM.Logger.debug(response)
+                    FM.helpers.ShowError(t("Error during ftp connection removal.<br/> Please contact Support."))
+                    FM.Logger.error(response)
 
         question.show()
 

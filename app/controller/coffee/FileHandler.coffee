@@ -21,7 +21,7 @@ Ext.define 'FM.controller.FileHandler',
           eventFilesMove: 'moveFiles'
 
   onLaunch: () ->
-    # empty
+# empty
 
   openDirectory: (session, path, panels) ->
     FM.Logger.log('Event openDirectory run in FileHandler! data = ', session, path, panels)
@@ -33,29 +33,23 @@ Ext.define 'FM.controller.FileHandler',
       else
         FM.helpers.SetLoading(panel.body, t("Loading..."))
 
-        if session.type == FM.Session.LOCAL_APPLET
-          try
-            panel.applet.listdir(path, panel.toString())
-          catch
+        FM.backend.ajaxSend '/actions/files/list',
+          params:
+            session: session
+            path: path
+          success: (response) =>
+            response_data = Ext.util.JSON.decode(response.responseText).data
+            listing = response_data
+
+            if listing.path != '/'
+              listing.items.unshift
+                name: ".."
+                is_dir: true
+
+            @fireEvent(FM.Events.file.listFiles, listing, [panel])
+            @fireEvent(FM.Events.main.saveSession, [panel])
+          failure: () =>
             FM.helpers.UnsetLoading(panel.body)
-        else
-          FM.backend.ajaxSend '/actions/files/list',
-            params:
-              session: session
-              path: path
-            success: (response) =>
-              response_data = Ext.util.JSON.decode(response.responseText).data
-              listing = response_data
-
-              if listing.path != '/'
-                listing.items.unshift
-                  name: ".."
-                  is_dir: true
-
-              @fireEvent(FM.Events.file.listFiles, listing, [panel])
-              @fireEvent(FM.Events.main.saveSession, [panel])
-            failure: () =>
-              FM.helpers.UnsetLoading(panel.body)
 
   listFiles: (listing, panels) ->
     FM.Logger.log('Event listFiles run in FileHandler! data = ', listing, panels)
@@ -334,7 +328,7 @@ Ext.define 'FM.controller.FileHandler',
       else
         chart_list.push
           name: chart_window.getPath()
-          size:0
+          size: 0
 
       files_chart.setChartData(chart_list)
       chart_series = files_chart.series.getAt(0)
@@ -357,9 +351,9 @@ Ext.define 'FM.controller.FileHandler',
           if file.item.get('name') == item.name
             item.color = file.color
         if not item.color
-          item.color = chart_colors[chart_colors.length-1].color
+          item.color = chart_colors[chart_colors.length - 1].color
 
-      FM.Logger.info('Chart colors', )
+      FM.Logger.info('Chart colors',)
 
       files_list.setFileList(status.data)
       FM.helpers.UnsetLoading(files_list.body)

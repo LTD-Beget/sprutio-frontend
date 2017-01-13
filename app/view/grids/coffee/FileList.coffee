@@ -47,9 +47,6 @@ Ext.define 'FM.view.grids.FileList',
     else if session? and session.type? and session.type == FM.Session.WEBDAV
       @initPublicWebDavConfig()
       @initPublicWebDavStore()
-    else if session? and session.type? and session.type == FM.Session.LOCAL_APPLET
-      @initLocalAppletConfig()
-      @initLocalAppletStore()
 
     panel.initEmptyContextMenu()
     @setFileList(listing)

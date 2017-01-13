@@ -27,7 +27,7 @@ Ext.define 'FM.action.Rename',
           button.disable()
           name = field.getValue()
 
-          if panel.filelist.store.find("name", name, 0, false, false, true) > -1
+          if panel.filelist.store.find("name", name, 0, false, true, true) > -1
             FM.helpers.ShowError(t("File with this name already exists in the current folder."))
             button.enable()
             return
@@ -37,27 +37,19 @@ Ext.define 'FM.action.Rename',
 
           target_path = FM.helpers.GetAbsName(session, renamed_record)
 
-          if session.type == FM.Session.LOCAL_APPLET
-            try
-              panel.applet.rename(source_path, target_path, session, promt_window)
-            catch
+          FM.backend.ajaxSend '/actions/files/rename',
+            params:
+              session: session
+              source_path: source_path
+              target_path: target_path
+            success: (response) =>
+              response_data = Ext.util.JSON.decode(response.responseText).data
+              FM.getApplication().fireEvent(FM.Events.file.renameFile, response_data.source, response_data.target, session)
+              promt_window.close()
+
+            failure: (response) =>
               button.enable()
               FM.helpers.ShowError(t("Error during operation. <br/>Please contact Support."))
-              FM.Logger.error("Applet error")
-          else
-            FM.backend.ajaxSend '/actions/files/rename',
-              params:
-                session: session
-                source_path: source_path
-                target_path: target_path
-              success: (response) =>
-                response_data = Ext.util.JSON.decode(response.responseText).data
-                FM.getApplication().fireEvent(FM.Events.file.renameFile, response_data.source ,response_data.target, session)
-                promt_window.close()
-
-              failure: (response) =>
-                button.enable()
-                FM.helpers.ShowError(t("Error during operation. <br/>Please contact Support."))
-                FM.Logger.error(response)
+              FM.Logger.error(response)
 
       promt.show();

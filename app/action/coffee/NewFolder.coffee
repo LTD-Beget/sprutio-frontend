@@ -32,26 +32,18 @@ Ext.define 'FM.action.NewFolder',
 
           path = FM.helpers.GetAbsName(session, record)
 
-          if session.type == FM.Session.LOCAL_APPLET
-            try
-              panel.applet.mkdir(path, session, promt_window)
-            catch
+          FM.backend.ajaxSend '/actions/files/mkdir',
+            params:
+              session: session
+              path: path
+            success: (response) =>
+              item = Ext.util.JSON.decode(response.responseText).data
+              FM.getApplication().fireEvent(FM.Events.file.makeDirectory, item, session)
+              promt_window.close()
+
+            failure: (response) =>
               button.enable()
               FM.helpers.ShowError(t("Error during operation. <br/>Please contact Support."))
-              FM.Logger.error("Applet error")
-          else
-            FM.backend.ajaxSend '/actions/files/mkdir',
-              params:
-                session: session
-                path: path
-              success: (response) =>
-                item = Ext.util.JSON.decode(response.responseText).data
-                FM.getApplication().fireEvent(FM.Events.file.makeDirectory, item, session)
-                promt_window.close()
-
-              failure: (response) =>
-                button.enable()
-                FM.helpers.ShowError(t("Error during operation. <br/>Please contact Support."))
-                FM.Logger.error(response)
+              FM.Logger.error(response)
 
       promt.show();

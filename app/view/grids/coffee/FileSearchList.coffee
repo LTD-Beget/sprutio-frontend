@@ -15,12 +15,16 @@ Ext.define 'FM.view.grids.FileSearchList',
   defaults:
     flex: 1
   height: 150
+
   initComponent: () ->
 
     FM.Logger.log('FM.view.grids.FileSearchList init')
     @callParent(arguments)
     @initEventsHandlers()
     @initGridConfig()
+
+    if @ownerCt?
+      @ownerCt.fileListStore = @store
 
   initEventsHandlers: () ->
     @handlers =
@@ -95,7 +99,13 @@ Ext.define 'FM.view.grids.FileSearchList',
       sortOnLoad: false
       model: 'FM.model.File'
 
+    @ownerCt.updateSearchFilterState listing.length < 1
+
     @setStore(store)
     @store.loadData(listing)
+
+    if @ownerCt?
+      @ownerCt.fileListStore = @store
+
     columns = Ext.ComponentQuery.query('gridcolumn[dataIndex=name]', @)
     columns[0].sort("ASC")
