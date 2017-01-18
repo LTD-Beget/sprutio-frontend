@@ -17,7 +17,7 @@ Ext.define 'FM.view.grids.ConnectionList',
       listeners: {
         beforeEdit: (boundEl, value) ->
           # если это соединение уже редактировалось, то его тип нельзя изменять
-          if value.record.get('id') > 0
+          if value.record.get('id').indexOf('ftp') != -1
             boundEl.editor.getComponent('combobox-connection-type-component').disable()
           else
             boundEl.editor.getComponent('combobox-connection-type-component').enable()
@@ -37,6 +37,11 @@ Ext.define 'FM.view.grids.ConnectionList',
     @initHandlers()
 
     @setStore(FM.Stores.Conenctions)
+
+    plugin = @getPlugin()
+
+    @on 'beforedestroy', () =>
+      plugin.cancelEdit()
 
   initHandlers: () ->
     panel = @

@@ -19,7 +19,7 @@ Ext.define('FM.view.grids.ConnectionList', {
       autoCancel: true,
       listeners: {
         beforeEdit: function(boundEl, value) {
-          if (value.record.get('id') > 0) {
+          if (value.record.get('id').indexOf('ftp') !== -1) {
             return boundEl.editor.getComponent('combobox-connection-type-component').disable();
           } else {
             return boundEl.editor.getComponent('combobox-connection-type-component').enable();
@@ -30,11 +30,18 @@ Ext.define('FM.view.grids.ConnectionList', {
   ],
   requires: ['FM.view.toolbars.ConnectionListTopToolbar', 'FM.model.Connection', 'Ext.ux.grid.plugin.RowEditing'],
   initComponent: function() {
+    var plugin;
     FM.Logger.log('FM.view.grids.ConnectionList init');
     this.callParent(arguments);
     this.initGridConfig();
     this.initHandlers();
-    return this.setStore(FM.Stores.Conenctions);
+    this.setStore(FM.Stores.Conenctions);
+    plugin = this.getPlugin();
+    return this.on('beforedestroy', (function(_this) {
+      return function() {
+        return plugin.cancelEdit();
+      };
+    })(this));
   },
   initHandlers: function() {
     var panel;

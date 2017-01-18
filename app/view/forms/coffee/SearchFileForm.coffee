@@ -138,7 +138,33 @@ Ext.define 'FM.view.forms.SearchFileForm',
       cls: 'search-file-filter'
       anchor: '100%'
       store: store
-      disabled: true
+
+      onClearClick: () ->
+        if @activeFilter
+          @setValue ''
+
+          fileListStore = @ownerCt.ownerCt.fileListStore
+          fileListStore.getFilters().remove @activeFilter
+
+          @activeFilter = null
+          @getTrigger('clear').hide()
+          @updateLayout()
+
+
+      onSearchClick: () ->
+        # we need to go deeper :D
+        fileListStore = @ownerCt.ownerCt.fileListStore
+        @activeFilter = new Ext.util.Filter
+          anyMatch: true
+          exactMatch: false
+          caseSensitive: true
+          property: 'name'
+          value: @getValue()
+
+        fileListStore.addFilter @activeFilter
+
+        @getTrigger('clear').show()
+        @updateLayout()
 
 
     @callParent(arguments)

@@ -54,11 +54,11 @@ Ext.define('FM.controller.FileHandler', {
               return _this.fireEvent(FM.Events.main.saveSession, [panel]);
             };
           })(this),
-          failure: (function(_this) {
-            return function() {
-              return FM.helpers.UnsetLoading(panel.body);
-            };
-          })(this)
+          failure: function() {
+            FM.helpers.UnsetLoading(panel.body);
+            FM.helpers.ShowError(t("Directory doesn't exists"));
+            return FM.Logger.error(response);
+          }
         }));
       }
     }

@@ -158,5 +158,10 @@ Ext.define('FM.view.windows.SearchFilesWindow', {
   },
   getOperationStatus: function() {
     return this.operationStatus;
+  },
+  updateSearchFilterState: function(state) {
+    var searchFilter;
+    searchFilter = Ext.ComponentQuery.query('searchfield[name=search-file-filter]', this)[0];
+    return searchFilter.setDisabled(state);
   }
 });

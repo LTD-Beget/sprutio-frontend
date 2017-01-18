@@ -76,6 +76,8 @@ Ext.define('FM.view.panels.TopPanel', {
     }
     if (FM.helpers.isAllowed(FM.Actions.AnalyzeSize, panel, files)) {
       return analyze_size_button.setDisabled(false);
+    } else if (panel.session.type === FM.Session.HOME || panel.session.type === FM.Session.SFTP) {
+      return analyze_size_button.setDisabled(false);
     } else {
       return analyze_size_button.setDisabled(true);
     }
