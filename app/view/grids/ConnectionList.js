@@ -19,7 +19,7 @@ Ext.define('FM.view.grids.ConnectionList', {
       autoCancel: true,
       listeners: {
         beforeEdit: function(boundEl, value) {
-          if (value.record.get('id') > 0) {
+          if (value.record.get('id').indexOf('ftp') !== -1) {
             return boundEl.editor.getComponent('combobox-connection-type-component').disable();
           } else {
             return boundEl.editor.getComponent('combobox-connection-type-component').enable();

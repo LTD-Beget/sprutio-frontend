@@ -48,6 +48,8 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
                     connection.set('id', 'sftp' + response_data['id'])
                   connection.commit()
 
+                  FM.Logger.debug(connection)
+
                 failure: (response) =>
                   FM.Logger.debug(response)
                   FM.helpers.ShowError(t("Error during sftp connection update.<br/> Please contact Support."))
@@ -71,6 +73,8 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
                   if response_data['id']
                     connection.set('id', 'ftp' + response_data['id'])
                   connection.commit()
+
+                  FM.Logger.debug(connection)
 
                 failure: (response) =>
                   FM.Logger.debug(response)
@@ -96,6 +100,8 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
                     connection.set('id', 'sftp' + response_data['id'])
                   connection.commit()
 
+                  FM.Logger.debug(connection)
+
                 failure: (response) =>
                   FM.Logger.debug(response)
                   FM.helpers.ShowError(t("Error during sftp connection creation.<br/> Please contact Support."))
@@ -118,6 +124,8 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
                   if response_data['id']
                     connection.set('id', 'ftp' + response_data['id'])
                   connection.commit()
+
+                  FM.Logger.debug(connection)
 
                 failure: (response) =>
                   FM.Logger.debug(response)
@@ -198,6 +206,7 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
               id = parseInt connection.get('id').replace(/(sf|f)tp/, "")
 
               if not id
+                @updateConnection connection.data
                 grid.getStore().remove(connection)
                 return
 
@@ -206,7 +215,8 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
                   params:
                     params:
                       id: id
-                  success: () ->
+                  success: () =>
+                    @updateConnection connection.data
                     grid.getStore().remove(connection)
                   failure: (response) ->
                     FM.Logger.debug(response)
@@ -217,7 +227,8 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
                   params:
                     params:
                       id: id
-                  success: () ->
+                  success: () =>
+                    @updateConnection connection.data
                     grid.getStore().remove(connection)
                   failure: (response) ->
                     FM.Logger.debug(response)
@@ -227,3 +238,43 @@ Ext.define 'FM.view.toolbars.ConnectionListTopToolbar',
         question.show()
 
     @callParent(arguments)
+
+  updateConnection: (connection) ->
+    connection['id'] = parseInt(connection['id'].replace(/(s)ftp/, ''))
+
+    if FM.Left.session['type'] == connection['type'] and FM.Left.session['server_id'] == connection['id']
+      FM.helpers.SetLoading(FM.Left.body, t("Loading..."))
+      FM.backend.ajaxSend '/actions/main/init_session',
+        success: (response) =>
+          response_data = Ext.util.JSON.decode(response.responseText).data
+          listing = response_data.listing
+
+          if listing.path != '/'
+            listing.items.unshift
+              name: ".."
+              is_dir: true
+
+          FM.getApplication().fireEvent(FM.Events.main.initSession, response_data, [FM.Left])
+        failure: (response) ->
+          FM.helpers.UnsetLoading(FM.Left.body)
+          FM.Logger.debug(response)
+          FM.helpers.ShowError(t("Unable to open connection.<br/> Please contact support."))
+          FM.Logger.error(response)
+    if FM.Right.session['type'] == connection['type'] and FM.Right.session['server_id'] == connection['server_id']
+      FM.helpers.SetLoading(FM.Right.body, t("Loading..."))
+      FM.backend.ajaxSend '/actions/main/init_session',
+        success: (response) =>
+          response_data = Ext.util.JSON.decode(response.responseText).data
+          listing = response_data.listing
+
+          if listing.path != '/'
+            listing.items.unshift
+              name: ".."
+              is_dir: true
+
+          FM.getApplication().fireEvent(FM.Events.main.initSession, response_data, [FM.Right])
+        failure: (response) ->
+          FM.helpers.UnsetLoading(FM.Right.body)
+          FM.Logger.debug(response)
+          FM.helpers.ShowError(t("Unable to open connection.<br/> Please contact support."))
+          FM.Logger.error(response)

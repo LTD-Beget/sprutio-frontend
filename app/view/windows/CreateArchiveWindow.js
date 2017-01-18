@@ -84,7 +84,8 @@ Ext.define('FM.view.windows.CreateArchiveWindow', {
             return _this.create(button, _this, e, {
               path: filepath,
               type: type,
-              files: paths
+              files: paths,
+              archive_name: file
             });
           }
         };
