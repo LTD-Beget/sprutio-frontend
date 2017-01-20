@@ -283,13 +283,13 @@ Ext.define 'FM.view.toolbars.MainTopToolbar',
           handler: () ->
             FM.Actions.RemoteConnections.execute(FM.Active)
         },
-        {
-          text: FM.Actions.RemoteWebDav.getMenuText()
-          name: FM.Actions.RemoteWebDav.getIconCls()
-          iconCls: FM.Actions.RemoteWebDav.getIconCls()
-          handler: () ->
-            FM.Actions.RemoteWebDav.execute(FM.Active)
-        },
+#        {
+#          text: FM.Actions.RemoteWebDav.getMenuText()
+#          name: FM.Actions.RemoteWebDav.getIconCls()
+#          iconCls: FM.Actions.RemoteWebDav.getIconCls()
+#          handler: () ->
+#            FM.Actions.RemoteWebDav.execute(FM.Active)
+#        },
         "-",
         {
           text: FM.Actions.IPBlock.getMenuText()

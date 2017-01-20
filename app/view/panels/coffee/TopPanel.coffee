@@ -87,6 +87,8 @@ Ext.define 'FM.view.panels.TopPanel',
 
     if FM.helpers.isAllowed(FM.Actions.AnalyzeSize, panel, files)
       analyze_size_button.setDisabled(false)
+    else if panel.session.type == FM.Session.HOME or panel.session.type == FM.Session.SFTP
+      analyze_size_button.setDisabled(false)
     else
       analyze_size_button.setDisabled(true)
 

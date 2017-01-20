@@ -75,6 +75,7 @@ Ext.define 'FM.view.windows.CreateArchiveWindow',
             path: filepath
             type: type
             files: paths
+            archive_name: file
 
     @cancel_btn = Ext.create 'Ext.button.Button',
       cls: 'fm-button-archive-cancel'

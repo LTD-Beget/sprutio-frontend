@@ -138,7 +138,31 @@ Ext.define('FM.view.forms.SearchFileForm', {
       cls: 'search-file-filter',
       anchor: '100%',
       store: store,
-      disabled: true
+      onClearClick: function() {
+        var fileListStore;
+        if (this.activeFilter) {
+          this.setValue('');
+          fileListStore = this.ownerCt.ownerCt.fileListStore;
+          fileListStore.getFilters().remove(this.activeFilter);
+          this.activeFilter = null;
+          this.getTrigger('clear').hide();
+          return this.updateLayout();
+        }
+      },
+      onSearchClick: function() {
+        var fileListStore;
+        fileListStore = this.ownerCt.ownerCt.fileListStore;
+        this.activeFilter = new Ext.util.Filter({
+          anyMatch: true,
+          exactMatch: false,
+          caseSensitive: true,
+          property: 'name',
+          value: this.getValue()
+        });
+        fileListStore.addFilter(this.activeFilter);
+        this.getTrigger('clear').show();
+        return this.updateLayout();
+      }
     });
     return this.callParent(arguments);
   }

@@ -134,3 +134,8 @@ Ext.define 'FM.view.windows.SearchFilesWindow',
 
   getOperationStatus: () ->
     return @operationStatus
+
+  updateSearchFilterState: (state) ->
+    searchFilter = Ext.ComponentQuery.query('searchfield[name=search-file-filter]', @)[0]
+    searchFilter.setDisabled(state)
+
