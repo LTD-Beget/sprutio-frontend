@@ -22,7 +22,7 @@ Ext.define('FM.action.NewFile', {
           FM.Logger.info('OK handler()', session, arguments);
           button.disable();
           name = field.getValue();
-          if (panel.filelist.store.find("name", name, 0, false, false, true) > -1) {
+          if (panel.filelist.store.find("name", name, 0, false, true, true) > -1) {
             FM.helpers.ShowError(t("File with this name already exists in the current folder."));
             button.enable();
             return;
@@ -36,21 +36,17 @@ Ext.define('FM.action.NewFile', {
               session: session,
               path: path
             },
-            success: (function(_this) {
-              return function(response) {
-                var item;
-                item = Ext.util.JSON.decode(response.responseText).data;
-                FM.getApplication().fireEvent(FM.Events.file.newFile, item, session);
-                return promt_window.close();
-              };
-            })(this),
-            failure: (function(_this) {
-              return function(response) {
-                button.enable();
-                FM.helpers.ShowError(t("Error during operation. <br/>Please contact Support."));
-                return FM.Logger.error(response);
-              };
-            })(this)
+            success: function(response) {
+              var item;
+              item = Ext.util.JSON.decode(response.responseText).data;
+              FM.getApplication().fireEvent(FM.Events.file.newFile, item, session);
+              return promt_window.close();
+            },
+            failure: function(response) {
+              button.enable();
+              FM.helpers.ShowError(t("Error during operation. <br/>Please contact Support."));
+              return FM.Logger.error(response);
+            }
           });
         }
       });

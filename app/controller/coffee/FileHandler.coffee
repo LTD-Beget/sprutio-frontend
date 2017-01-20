@@ -48,8 +48,10 @@ Ext.define 'FM.controller.FileHandler',
 
             @fireEvent(FM.Events.file.listFiles, listing, [panel])
             @fireEvent(FM.Events.main.saveSession, [panel])
-          failure: () =>
+          failure: () ->
             FM.helpers.UnsetLoading(panel.body)
+            FM.helpers.ShowError(t("Directory doesn't exists"))
+            FM.Logger.error(response)
 
   listFiles: (listing, panels) ->
     FM.Logger.log('Event listFiles run in FileHandler! data = ', listing, panels)

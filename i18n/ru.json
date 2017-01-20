@@ -67,6 +67,7 @@
   "Deny, Allow": "Сначала запрещенные, потом разрешенные",
   "Digital Value": "Кодовое значение",
   "Directories": "Папки",
+  "Directory doesn't exist": "Такой папки не существует",
   "Disable sharing": "Отменить общий доступ",
   "Disabling sharing...": "Общий доступ отменяется...",
   "Do you really want to remove all selected elements?": "Вы действительно хотите удалить все выбранные файлы?",

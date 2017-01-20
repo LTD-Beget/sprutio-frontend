@@ -33,13 +33,13 @@ Ext.define 'FM.controller.HomeHandler',
       FM.Home.quota = data.quota
       @processQuota(data.quota, panels)
 
-    if data.account?
-      FM.Home.account = data.account
-      @processAccount(data.account, panels)
-
     if data.connections?
       FM.Home.connections = []
       @processConnections(data.connections)
+
+    if data.account?
+      FM.Home.account = data.account
+      @processAccount(data.account, panels)
 
     if data.webdav_connections?
       FM.Home.webdav_connections = []
@@ -161,6 +161,12 @@ Ext.define 'FM.controller.HomeHandler',
     for panel in panels
       if panel.session.type == FM.Session.HOME
         panel.setServerName(login + '@' + server_name)
+      else
+        session_data = FM.Stores.Conenctions.getById(panel.session.type + panel.session.server_id).data
+        login = session_data.user
+        type  = session_data.type
+        host  = session_data.host
+        panel.setServerName(type + '://' + login + '@' + host)
 
   processConnections: (connections) ->
     FM.Logger.log('processConnections() called arguments =', arguments)

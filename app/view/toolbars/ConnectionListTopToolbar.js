@@ -50,7 +50,8 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
                     if (response_data['id']) {
                       connection.set('id', 'sftp' + response_data['id']);
                     }
-                    return connection.commit();
+                    connection.commit();
+                    return FM.Logger.debug(connection);
                   },
                   failure: function(response) {
                     FM.Logger.debug(response);
@@ -80,7 +81,8 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
                     if (response_data['id']) {
                       connection.set('id', 'ftp' + response_data['id']);
                     }
-                    return connection.commit();
+                    connection.commit();
+                    return FM.Logger.debug(connection);
                   },
                   failure: function(response) {
                     FM.Logger.debug(response);
@@ -112,7 +114,8 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
                     if (response_data['id']) {
                       connection.set('id', 'sftp' + response_data['id']);
                     }
-                    return connection.commit();
+                    connection.commit();
+                    return FM.Logger.debug(connection);
                   },
                   failure: function(response) {
                     FM.Logger.debug(response);
@@ -141,7 +144,8 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
                     if (response_data['id']) {
                       connection.set('id', 'ftp' + response_data['id']);
                     }
-                    return connection.commit();
+                    connection.commit();
+                    return FM.Logger.debug(connection);
                   },
                   failure: function(response) {
                     FM.Logger.debug(response);
@@ -233,6 +237,7 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
               if (connection.get('id').toString().indexOf('FM.model.Connection') === -1) {
                 id = parseInt(connection.get('id').replace(/(sf|f)tp/, ""));
                 if (!id) {
+                  _this.updateConnection(connection.data);
                   grid.getStore().remove(connection);
                   return;
                 }
@@ -244,6 +249,7 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
                       }
                     },
                     success: function() {
+                      _this.updateConnection(connection.data);
                       return grid.getStore().remove(connection);
                     },
                     failure: function(response) {
@@ -261,6 +267,7 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
                       }
                     },
                     success: function() {
+                      _this.updateConnection(connection.data);
                       return grid.getStore().remove(connection);
                     },
                     failure: function(response) {
@@ -278,5 +285,58 @@ Ext.define('FM.view.toolbars.ConnectionListTopToolbar', {
       })(this)
     });
     return this.callParent(arguments);
+  },
+  updateConnection: function(connection) {
+    connection['id'] = parseInt(connection['id'].replace(/(s)ftp/, ''));
+    if (FM.Left.session['type'] === connection['type'] && FM.Left.session['server_id'] === connection['id']) {
+      FM.helpers.SetLoading(FM.Left.body, t("Loading..."));
+      FM.backend.ajaxSend('/actions/main/init_session', {
+        success: (function(_this) {
+          return function(response) {
+            var listing, response_data;
+            response_data = Ext.util.JSON.decode(response.responseText).data;
+            listing = response_data.listing;
+            if (listing.path !== '/') {
+              listing.items.unshift({
+                name: "..",
+                is_dir: true
+              });
+            }
+            return FM.getApplication().fireEvent(FM.Events.main.initSession, response_data, [FM.Left]);
+          };
+        })(this),
+        failure: function(response) {
+          FM.helpers.UnsetLoading(FM.Left.body);
+          FM.Logger.debug(response);
+          FM.helpers.ShowError(t("Unable to open connection.<br/> Please contact support."));
+          return FM.Logger.error(response);
+        }
+      });
+    }
+    if (FM.Right.session['type'] === connection['type'] && FM.Right.session['server_id'] === connection['server_id']) {
+      FM.helpers.SetLoading(FM.Right.body, t("Loading..."));
+      return FM.backend.ajaxSend('/actions/main/init_session', {
+        success: (function(_this) {
+          return function(response) {
+            var listing, response_data;
+            response_data = Ext.util.JSON.decode(response.responseText).data;
+            listing = response_data.listing;
+            if (listing.path !== '/') {
+              listing.items.unshift({
+                name: "..",
+                is_dir: true
+              });
+            }
+            return FM.getApplication().fireEvent(FM.Events.main.initSession, response_data, [FM.Right]);
+          };
+        })(this),
+        failure: function(response) {
+          FM.helpers.UnsetLoading(FM.Right.body);
+          FM.Logger.debug(response);
+          FM.helpers.ShowError(t("Unable to open connection.<br/> Please contact support."));
+          return FM.Logger.error(response);
+        }
+      });
+    }
   }
 });

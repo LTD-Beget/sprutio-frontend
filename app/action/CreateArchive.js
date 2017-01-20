@@ -24,24 +24,44 @@ Ext.define('FM.action.CreateArchive', {
       session = Ext.ux.Util.clone(panel.session);
       win = Ext.create("FM.view.windows.CreateArchiveWindow", {
         taskBar: bottom_toolbar,
-        create: (function(_this) {
-          return function(button, archive_window, e, params) {
-            var wait;
-            wait = Ext.create('FM.view.windows.ProgressWindow', {
-              cancelable: true,
-              msg: t("Creating archive, please wait..."),
-              cancel: function(wait_window, session, status) {
-                FM.Logger.debug('CreateArchive cancel called()', arguments);
-                if (status != null) {
-                  return FM.Actions.CreateArchive.cancel(wait_window, session, status);
-                }
+        create: function(button, archive_window, e, params) {
+          var ext, full_name, name, type, wait;
+          type = params['type'];
+          button.disable();
+          name = params['archive_name'];
+          ext = (function() {
+            switch (false) {
+              case type !== 'zip':
+                return '.zip';
+              case type !== 'bz2':
+                return '.tar.bz2';
+              case type !== 'gzip':
+                return '.tar.gz';
+              case type !== 'tar':
+                return '.tar';
+            }
+          })();
+          full_name = name + ext;
+          FM.Logger.debug(button, full_name, params);
+          if (panel.filelist.store.find("name", full_name, 0, false, true, true) > -1) {
+            FM.helpers.ShowError(t("File with this name already exists in the current folder."));
+            button.enable();
+            return;
+          }
+          wait = Ext.create('FM.view.windows.ProgressWindow', {
+            cancelable: true,
+            msg: t("Creating archive, please wait..."),
+            cancel: function(wait_window, session, status) {
+              FM.Logger.debug('CreateArchive cancel called()', arguments);
+              if (status != null) {
+                return FM.Actions.CreateArchive.cancel(wait_window, session, status);
               }
-            });
-            wait.setSession(session);
-            FM.Actions.CreateArchive.process(wait, session, params);
-            return archive_window.close();
-          };
-        })(this)
+            }
+          });
+          wait.setSession(session);
+          FM.Actions.CreateArchive.process(wait, session, params);
+          return archive_window.close();
+        }
       });
       win.setSession(session);
       win.initRecords(records);

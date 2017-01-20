@@ -20,7 +20,26 @@ Ext.define 'FM.action.CreateArchive',
 
       win = Ext.create "FM.view.windows.CreateArchiveWindow",
         taskBar: bottom_toolbar
-        create: (button, archive_window, e, params) =>
+        create: (button, archive_window, e, params) ->
+          type = params['type']
+          button.disable()
+          name = params['archive_name']
+
+          ext = switch
+            when type == 'zip'  then '.zip'
+            when type == 'bz2'  then '.tar.bz2'
+            when type == 'gzip' then '.tar.gz'
+            when type == 'tar'  then '.tar'
+
+          full_name = name + ext
+
+          FM.Logger.debug(button, full_name, params)
+
+          if panel.filelist.store.find("name", full_name, 0, false, true, true) > -1
+            FM.helpers.ShowError(t("File with this name already exists in the current folder."))
+            button.enable()
+            return
+
           wait = Ext.create 'FM.view.windows.ProgressWindow',
             cancelable: true
             msg: t("Creating archive, please wait...")

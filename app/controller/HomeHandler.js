@@ -35,13 +35,13 @@ Ext.define('FM.controller.HomeHandler', {
       FM.Home.quota = data.quota;
       this.processQuota(data.quota, panels);
     }
-    if (data.account != null) {
-      FM.Home.account = data.account;
-      this.processAccount(data.account, panels);
-    }
     if (data.connections != null) {
       FM.Home.connections = [];
       this.processConnections(data.connections);
+    }
+    if (data.account != null) {
+      FM.Home.account = data.account;
+      this.processAccount(data.account, panels);
     }
     if (data.webdav_connections != null) {
       FM.Home.webdav_connections = [];
@@ -187,7 +187,7 @@ Ext.define('FM.controller.HomeHandler', {
     return results;
   },
   processAccount: function(account, panels) {
-    var i, len, login, panel, results, server_name;
+    var host, i, len, login, panel, results, server_name, session_data, type;
     login = account.login != null ? account.login : '';
     server_name = account.server != null ? account.server : '';
     results = [];
@@ -196,7 +196,11 @@ Ext.define('FM.controller.HomeHandler', {
       if (panel.session.type === FM.Session.HOME) {
         results.push(panel.setServerName(login + '@' + server_name));
       } else {
-        results.push(void 0);
+        session_data = FM.Stores.Conenctions.getById(panel.session.type + panel.session.server_id).data;
+        login = session_data.user;
+        type = session_data.type;
+        host = session_data.host;
+        results.push(panel.setServerName(type + '://' + login + '@' + host));
       }
     }
     return results;
